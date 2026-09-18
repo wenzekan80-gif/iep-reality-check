@@ -17,7 +17,7 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 async function openReview() {
   const data = loadEthanDemo(); const user = userEvent.setup();
   render(<DemoApp data={data} />);
-  await user.click(screen.getByRole("button", { name: "Try the fictional demo" }));
+  await user.click(screen.getByRole("button", { name: "Try Ethan’s fictional story" }));
   await user.click(screen.getByRole("button", { name: "Looks right" }));
   return { data, user };
 }
@@ -89,7 +89,7 @@ describe("parent-facing demo flow", () => {
   });
   it("unsure parents stay on the plan until they explicitly confirm", async () => {
     const user = userEvent.setup(); render(<DemoApp data={loadEthanDemo()} />);
-    await user.click(screen.getByRole("button", { name: "Try the fictional demo" }));
+    await user.click(screen.getByRole("button", { name: "Try Ethan’s fictional story" }));
     await user.click(screen.getByRole("button", { name: "I'm not sure" }));
     expect(screen.getByRole("status")).toHaveTextContent("It's okay to pause here.");
     expect(screen.queryByTestId("documented-count")).not.toBeInTheDocument();
@@ -99,7 +99,7 @@ describe("parent-facing demo flow", () => {
   });
   it("edited details are confirmed and recalculated, with a distinct honest source", async () => {
     const user = userEvent.setup(); render(<DemoApp data={loadEthanDemo()} />);
-    await user.click(screen.getByRole("button", { name: "Try the fictional demo" }));
+    await user.click(screen.getByRole("button", { name: "Try Ethan’s fictional story" }));
     await user.click(screen.getByRole("button", { name: "Edit" }));
     const input = screen.getByLabelText("Minutes each session");
     await user.clear(input); await user.type(input, "45");
@@ -118,7 +118,7 @@ describe("parent-facing demo flow", () => {
     const { user } = await openReview();
     await user.click(screen.getByRole("button", { name: /I found another service record/ }));
     await user.click(screen.getByRole("button", { name: "Restart demo" }));
-    await user.click(screen.getByRole("button", { name: "Try the fictional demo" }));
+    await user.click(screen.getByRole("button", { name: "Try Ethan’s fictional story" }));
     await user.click(screen.getByRole("button", { name: "Looks right" }));
     expect(screen.getByTestId("documented-count")).toHaveTextContent(/^10$/);
     expect(screen.getByTestId("unresolved-count")).toHaveTextContent(/^1$/);

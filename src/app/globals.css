@@ -43,28 +43,6 @@ main { width: 90%; max-width: 1190px; margin: 0 auto; flex: 1; padding: 30px 0 4
 .site-footer { width: 90%; margin: auto; padding: 20px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-size: 11px; }
 .skip-link { position: fixed; top: -70px; left: 20px; z-index: 20; padding: 12px; background: var(--paper); }
 .skip-link:focus { top: 12px; }
-.home-hero { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; column-gap: 70px; padding: 55px 0 0; }
-.hero-copy h1 { font-size: clamp(40px, 4.4vw, 62px); line-height: 1.14; letter-spacing: -1.9px; margin: 22px 0; }
-.hero-copy h1 em { color: #587249; font-weight: 400; }
-.hero-description { max-width: 490px; color: var(--muted); font-size: 16px; line-height: 1.75; }
-.hero-cta { margin-top: 28px; padding: 14px 24px; }
-.hero-copy > .small { margin-top: 12px; }
-.hero-illustration { position: relative; padding: 20px 15px 55px 0; margin-left: 10px; }
-.illustrated-paper { position: relative; background: #fffdf6; border: 1px solid #dddcc8; border-radius: 7px; transform: rotate(-3deg); padding: 38px 30px; box-shadow: 0 18px 35px #293c2510; }
-.paper-shadow { position: absolute; background: #e8ecdf; border: 1px solid #d6ddca; border-radius: 7px; inset: 24px -4px 57px 8px; transform: rotate(4deg); }
-.sketch-line { height: 7px; width: 40%; background: #e2e6d8; border-radius: 5px; margin: 12px 0; }
-.sketch-line.long { width: 75%; margin-top: 25px; }
-.illustrated-check, .illustrated-question { display: flex; gap: 16px; align-items: center; padding: 12px 0; font-size: 22px; color: var(--green); }
-.illustrated-check:first-of-type { margin-top: 24px; }
-.illustrated-check span, .illustrated-question span { font-size: 14px; color: var(--ink); }
-.illustrated-question { color: var(--amber); }
-.paper-foot { padding-top: 25px; margin-top: 13px; border-top: 1px dashed #cdd3c3; font-family: Georgia, serif; font-size: 17px; font-style: italic; color: #68775d; }
-.small-note { position: absolute; right: -12px; bottom: 18px; background: #ecefdf; border: 1px solid #d8ddc7; padding: 20px 25px; font-family: Georgia, serif; font-size: 19px; transform: rotate(3deg); box-shadow: 0 7px 17px #233c3510; }
-.home-steps { grid-column: 1 / -1; list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 70px; border-top: 1px solid var(--line); padding: 25px 0 0; gap: 24px; }
-.home-steps li { display: flex; gap: 16px; align-items: flex-start; }
-.home-steps li > span { font-family: Georgia, serif; color: #7d8b6e; font-size: 25px; }
-.home-steps h2 { font-size: 15px; margin-top: 3px; }
-.home-steps p { font-size: 12px; color: var(--muted); margin-top: 5px; }
 .progress-nav { width: 90%; max-width: 1190px; margin: auto; padding: 18px 0 0; }
 .progress-nav ol { list-style: none; padding: 0; display: flex; gap: 32px; }
 .progress-nav button { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--muted); padding: 5px 0 12px; border-bottom: 2px solid transparent; }
@@ -184,10 +162,8 @@ main { width: 90%; max-width: 1190px; margin: 0 auto; flex: 1; padding: 30px 0 4
   .site-header { min-height: 62px; } main { padding-top: 20px; }
   .progress-nav { padding-top: 10px; } .page-heading { margin-bottom: 16px; }
   .summary-cards { margin: 12px 0; } .summary-card { padding: 10px 16px; }
-  .home-hero { padding-top: 20px; } .home-steps { margin-top: 40px; }
 }
 @media (max-width: 1000px) {
-  .home-hero { gap: 35px; } .hero-copy h1 { font-size: 44px; } .illustrated-paper { padding: 25px 20px; }
   .plan-grid { gap: 30px; } .evidence-grid { grid-template-columns: 1.15fr 1fr; gap: 14px; }
   .timeline-panel { padding: 16px 12px; } .finding-detail { padding: 19px; }
   .week-name { min-width: 75px; } .week-events { gap: 6px; } .event { padding: 5px; }
@@ -199,9 +175,7 @@ main { width: 90%; max-width: 1190px; margin: 0 auto; flex: 1; padding: 30px 0 4
   body { font-size: 14px; } .site-header { min-height: 68px; } .wordmark { font-size: 16px; }
   .brand-mark { width: 25px; height: 29px; font-size: 18px; } .demo-label { font-size: 8px; padding: 5px 6px; letter-spacing: .7px; }
   .header-actions { gap: 10px; } .header-actions .text-button { font-size: 10px; }
-  main { padding-top: 24px; } .home-hero { display: block; padding-top: 20px; } .hero-copy h1 { font-size: clamp(38px, 8vw, 52px); }
-  .hero-copy > .eyebrow { font-size: 8px; } .hero-description { font-size: 15px; }
-  .hero-illustration { max-width: 330px; margin: 25px auto 0; } .home-steps { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 20px; }
+  main { padding-top: 24px; }
   .progress-nav ol { gap: 18px; justify-content: space-between; } .progress-nav button { font-size: 10px; gap: 5px; align-items: flex-start; text-align: left; }
   .plan-grid, .evidence-grid { grid-template-columns: 1fr; gap: 20px; } .plan-card { padding: 24px; }
   .confirmation-panel { padding: 0 5px; } .review-heading { display: block; } .review-heading > button { margin-top: 14px; }

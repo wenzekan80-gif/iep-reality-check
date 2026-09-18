@@ -82,7 +82,7 @@ All counts, per-session findings and questions come from `reconcile`. The browse
 
 Run `npm run dev -- --hostname 127.0.0.1 --port 3137` and open http://127.0.0.1:3137. For a production run, use `npm run build` followed by `npm start -- --hostname 127.0.0.1 --port 3137` instead.
 
-1. **0:00–0:15:** Home → Try the fictional demo. Point out that no real student data is used.
+1. **0:00–0:15:** Home → Try Ethan’s fictional story. Point out that no real student data is used.
 2. **0:15–0:35:** Plan → View original source → close → Looks right. Confirm 2 sessions and 30 minutes.
 3. **0:35–1:00:** Select Week 3's “Needs clarification” event → View source → close. Explain that the available files do not establish whether the service occurred.
 4. **1:00–1:15:** Select Week 4's “Explained” cancellation → View source → close. Ask about a make-up.
@@ -91,3 +91,15 @@ Run `npm run dev -- --hostname 127.0.0.1 --port 3137` and open http://127.0.0.1:
 7. **1:45–2:00:** Return to meeting prep. One make-up follow-up remains. Use Print meeting sheet if desired. Restart demo restores the initial case for another take.
 
 The timings are a presentation guide, not a measured human usability study. At smaller laptop heights, a short vertical scroll is needed to reach the new-record action. Mobile uses stacked sections. Browser print styles have a source appendix and can span multiple pages; native printer/page-break behavior still varies by browser.
+
+## Guardian homepage
+
+`HomePage.tsx` now owns the homepage, including the parent-first copy and the explicitly fictional Mike/Ethan introduction. `GuardianSprite.tsx` contains original inline SVG drawings: a rounded, leaf-topped guardian and the family at a table. The page uses ivory, sage, soft blue and restrained amber, with abstract polygon motifs. There are no video/image assets, external fonts, animation packages or additional dependencies.
+
+`HeroStory.tsx` shows six 2.5-second moments, for a 15-second loop: scattered paperwork → plan details → six-week records → uncertainty → new evidence → meeting ready. Story counts and timeline states come from the existing Ethan data and engine. This preview never adds evidence to the interactive demo. Mike and the school email are narrative context only; no new evidentiary source is fabricated.
+
+`home.css` contains homepage-only drawing layout, floating, staggered record placement, source-to-summary light lines, evidence movement and circle-to-dot transition. Shared review/meeting styles are unchanged apart from removing obsolete homepage rules.
+
+The story has a Pause/Play button and six labelled, keyboard-operable moment buttons. Choosing a moment pauses playback. Automatic changes do not trigger live-region announcements. `prefers-reduced-motion` disables CSS motion and automatic advancement; a static meeting-ready scene is shown, and the six moments remain manually selectable. Motion preference changes are handled live; hidden browser tabs stop advancing. Component unmount cleans up timers and listeners.
+
+For screenshot-ready views, select any moment to pause it, then scroll to the top. Moment 1 shows the parent and guardian; moment 4 shows careful uncertainty language; moment 5 shows new evidence; moment 6 shows the remaining make-up question. The 7 added animation tests join the existing 48 tests. Existing flow tests only change the homepage CTA selector.
