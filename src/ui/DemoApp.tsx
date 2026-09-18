@@ -41,6 +41,9 @@ export function DemoApp({ data }: { data: DemoData }) {
     if (previousScreen.current !== screen) main.current?.querySelector<HTMLElement>("h1")?.focus();
     previousScreen.current = screen;
   }, [screen]);
+  useEffect(() => {
+    if (lateAdded) main.current?.querySelector<HTMLElement>(".event[aria-pressed='true']")?.focus();
+  }, [lateAdded]);
   return <div className="app-shell">
     <a className="skip-link" href="#main">Skip to content</a>
     <header className="site-header"><button className="wordmark" onClick={() => setScreen("home")} aria-label="IEP Reality Check home"><span className="brand-mark" aria-hidden="true">✓</span>IEP <strong>Reality Check</strong></button>
