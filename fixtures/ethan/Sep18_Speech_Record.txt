@@ -1,0 +1,6 @@
+FICTIONAL DEMO CASE — NO REAL STUDENT DATA
+Student: Ethan Miller
+Service: Speech-Language Therapy
+Date: 2025-09-18
+Duration: 30 minutes
+Status: completed

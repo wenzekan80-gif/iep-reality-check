@@ -1,0 +1,10 @@
+FICTIONAL DEMO CASE — NO REAL STUDENT DATA
+Fictional six-week instructional window
+This is not a real school calendar. No real school holidays are inferred.
+Week 1: 2025-09-01 through 2025-09-05
+Week 2: 2025-09-08 through 2025-09-12
+Week 3: 2025-09-15 through 2025-09-19
+Week 4: 2025-09-22 through 2025-09-26
+Week 5: 2025-09-29 through 2025-10-03
+Week 6: 2025-10-06 through 2025-10-10
+For this fictional case only each listed interval is a complete instructional week.

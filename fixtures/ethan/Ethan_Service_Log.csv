@@ -1,0 +1,13 @@
+FICTIONAL DEMO CASE — NO REAL STUDENT DATA
+date,serviceName,minutes,status,reason
+2025-09-02,Speech-Language Therapy,30,completed,
+2025-09-04,Speech-Language Therapy,30,completed,
+2025-09-09,Speech-Language Therapy,30,completed,
+2025-09-11,Speech-Language Therapy,30,completed,
+2025-09-16,Speech-Language Therapy,30,completed,
+2025-09-23,Speech-Language Therapy,0,cancelled,provider unavailable
+2025-09-25,Speech-Language Therapy,30,completed,
+2025-09-30,Speech-Language Therapy,30,completed,
+2025-10-02,Speech-Language Therapy,30,completed,
+2025-10-07,Speech-Language Therapy,30,completed,
+2025-10-09,Speech-Language Therapy,30,completed,

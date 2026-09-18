@@ -167,8 +167,9 @@ export function reconcile(raw: ReconciliationInput): ReconciliationResult {
       status: "unresolved", expectedSessions: 1, documentedSessions: 0, expectedMinutes: duration,
       documentedMinutes: 0, explanation: "No matching record was found in the files provided.", sourceBlockIds: ids,
     });
+    const periodPhrase = week.label.charAt(0).toLowerCase() + week.label.slice(1);
     if (ws.unresolved) question(`${week.id}:locate-record`, "Locate the remaining service record",
-      `Were the remaining planned ${plan.serviceName} sessions provided during ${week.label.toLowerCase()}? If so, could you help me locate the service record?`,
+      `${ws.unresolved === 1 ? "Was the remaining planned" : "Were the remaining planned"} ${plan.serviceName} ${ws.unresolved === 1 ? "session" : "sessions"} provided during the ${periodPhrase}? If so, could you help me locate the service record?`,
       `${frequency} sessions are planned; ${completed.length} completed and ${explained.length} explained events appear in the supplied records.`, ids);
     if (ws.perSessionDurationConsistent === false) question(`${week.id}:duration`, "Clarify session duration and frequency",
       "Could you clarify how the documented session durations and frequency relate to the confirmed plan?",

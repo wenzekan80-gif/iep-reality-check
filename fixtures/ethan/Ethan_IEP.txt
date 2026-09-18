@@ -1,0 +1,10 @@
+FICTIONAL DEMO CASE — NO REAL STUDENT DATA
+Name: Ethan Miller
+Age: 8
+Plan version: ethan-v1
+Effective from: 2025-09-01
+Effective through: 2025-10-10
+Service: Speech-Language Therapy
+Frequency: 2 sessions / school week
+Duration: 30 minutes / session
+These dates and services are invented for a demonstration.
