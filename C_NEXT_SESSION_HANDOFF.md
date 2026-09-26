@@ -1,4 +1,14 @@
-# Compact release continuation
+# Current continuation: parchment interface
+
+- The user explicitly corrected the prior priority: “不对，我们是要把界面改成羊皮纸风格”. The active task is the parchment restyle. Submission work and its unanswered questions are parked.
+- Current worktree: `D:\IEP-Reality-Check-parchment`; branch `ui/parchment-style-20260927`. Read actual HEAD/status before continuing.
+- Product styling commit: `efb927f35a611e74b52c2b36659871ff3b6ae934`. Only `src/app/layout.tsx` and new `src/app/parchment.css` change product files. Domain code, fixtures, UI behavior and dependencies are unchanged.
+- Local production preview: http://127.0.0.1:3141 . The Codex browser preview is open. Restart if needed with `npm run build` then `npm start -- --hostname 127.0.0.1 --port 3141` from this worktree.
+- Fresh checks: 55 tests, typecheck and production build PASS. Actual local browser flow and 390px responsive checks PASS. Reduced motion still stops the story; emulated print has white background and no texture or scroll edges. See `PARCHMENT_UI_REVIEW.md` and `outputs/parchment-review/`.
+- The original release worktree remains clean at `091d3fd`. Public main, stable tags and production Vercel deployment were not changed. The video still depicts the older deployed interface; do not claim it shows this restyle.
+- No upload, terms agreement or Devpost submission was performed. Do not resume submission or ask the old questions unless the user returns to that work.
+
+# Archived release continuation (superseded priority)
 
 - Role: C release coordinator; user permits short-context subagents. Latest explicit priority: finish the current version's submission first. Do not implement AI or restyle before submission completion. Parchment/scroll visual preference is deferred.
 - Worktree: `D:\IEP-Reality-Check-release`, branch `release/lexhack-stable-20260927`. Always read actual HEAD/status first.

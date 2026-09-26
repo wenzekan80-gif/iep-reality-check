@@ -94,7 +94,7 @@ The timings are a presentation guide, not a measured human usability study. At s
 
 ## Guardian homepage
 
-`HomePage.tsx` now owns the homepage, including the parent-first copy and the explicitly fictional Mike/Ethan introduction. `GuardianSprite.tsx` contains original inline SVG drawings: a rounded, leaf-topped guardian and the family at a table. The page uses ivory, sage, soft blue and restrained amber, with abstract polygon motifs. There are no video/image assets, external fonts, animation packages or additional dependencies.
+`HomePage.tsx` owns the homepage, including the parent-first copy and the explicitly fictional Mike/Ethan introduction. `GuardianSprite.tsx` contains original inline SVG drawings: a rounded, leaf-topped guardian and the family at a table. This branch adds a parchment presentation in `src/app/parchment.css`, activated by the body class in the root layout: warm paper grain, rolled page edges, brown ink, serif headings and softly toned illustrations. The same theme covers plan confirmation, records, sources and meeting preparation. Green, blue-grey and amber still distinguish evidence states. The texture is an inline SVG in CSS; there are no external assets, external fonts, animation packages or additional dependencies. The theme is screen-only, so the existing plain printable meeting sheet is preserved.
 
 `HeroStory.tsx` shows six 2.5-second moments, for a 15-second loop: scattered paperwork → plan details → six-week records → uncertainty → new evidence → meeting ready. Story counts and timeline states come from the existing Ethan data and engine. This preview never adds evidence to the interactive demo. Mike and the school email are narrative context only; no new evidentiary source is fabricated.
 
