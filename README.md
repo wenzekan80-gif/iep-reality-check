@@ -103,7 +103,7 @@ Public mode allows exactly these two strings, with one newline after the disclai
 
 ```text
 FICTIONAL DEMO CASE — NO REAL STUDENT DATA
-Ethan receives Speech-Language Therapy 2 sessions each school week, 30 minutes per session.
+Speech-language pathology services will be provided twice weekly for 30 minutes per session.
 ```
 
 ```text
@@ -143,4 +143,4 @@ The timings are a presentation guide, not a measured human usability study. At s
 
 The story has a Pause/Play button and six labelled, keyboard-operable moment buttons. Choosing a moment pauses playback. Automatic changes do not trigger live-region announcements. `prefers-reduced-motion` disables CSS motion and automatic advancement; a static meeting-ready scene is shown, and the six moments remain manually selectable. Motion preference changes are handled live; hidden browser tabs stop advancing. Component unmount cleans up timers and listeners.
 
-For screenshot-ready views, select any moment to pause it, then scroll to the top. Moment 1 shows the parent and guardian; moment 4 shows careful uncertainty language; moment 5 shows new evidence; moment 6 shows the remaining make-up question. The notebook baseline has 68 tests, including the original 55 plus flip lifecycle, reset-focus and real-engine evidence annotation regressions. The AI delivery adds 53 tests, for 121 total. See `NOTEBOOK_UI_REVIEW.md` for the earlier notebook browser validation and `A_AI_DELIVERY.md` for the current AI implementation checks and limits.
+For screenshot-ready views, select any moment to pause it, then scroll to the top. Moment 1 shows the parent and guardian; moment 4 shows careful uncertainty language; moment 5 shows new evidence; moment 6 shows the remaining make-up question. The notebook baseline has 68 tests, including the original 55 plus flip lifecycle, reset-focus and real-engine evidence annotation regressions. The AI delivery adds 54 tests, for 122 total. See `NOTEBOOK_UI_REVIEW.md` for the earlier notebook browser validation and `A_AI_DELIVERY.md` for the current AI implementation checks and limits.

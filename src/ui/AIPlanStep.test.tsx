@@ -8,7 +8,7 @@ import { SYNTHETIC_EXAMPLES } from "../ai/examples";
 import { DemoApp } from "./DemoApp";
 import { QuotedSource } from "./AIPlanStep";
 
-const candidate = { service: { value: "Speech-Language Therapy", quote: "Speech-Language Therapy" }, weeklyFrequency: { value: 2, quote: "2 sessions each school week" }, minutesPerSession: { value: 30, quote: "30 minutes per session" }, needsReview: false };
+const candidate = { service: { value: "Speech-Language Therapy", quote: "Speech-language pathology services" }, weeklyFrequency: { value: 2, quote: "twice weekly" }, minutesPerSession: { value: 30, quote: "30 minutes per session" }, needsReview: false };
 const success = () => Response.json({ candidate, origin: "live-model", exampleId: "ethan-clear" });
 beforeAll(() => {
   HTMLDialogElement.prototype.showModal = function () { this.setAttribute("open", ""); };

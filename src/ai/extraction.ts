@@ -16,11 +16,11 @@ export class EvidenceError extends Error {
   constructor() { super("The extracted fields could not be verified against the excerpt. Review the wording and try again."); }
 }
 
-const speech = /\b(?:speech[- ]language therapy|speech(?: and language)? services|speech therapy)\b/i;
+const speech = /\b(?:speech[- ]language (?:therapy|pathology services)|speech(?: and language)? services|speech therapy)\b/i;
 const otherService = /\b(?:occupational therapy|physical therapy|counseling)\b/i;
 const numbers: Record<string, number> = { once: 1, twice: 2, one: 1, two: 2, three: 3, four: 4, five: 5 };
 const numberValue = (s: string) => numbers[s.toLowerCase()] ?? Number(s);
-const frequency = /\b(\d+|one|two|three|four|five) (?:sessions?|times?) (?:each|per|a) (?:school )?week\b|\b(once|twice) (?:each|per|a) (?:school )?week\b/gi;
+const frequency = /\b(\d+|one|two|three|four|five) (?:sessions?|times?) (?:each|per|a) (?:school )?week\b|\b(once|twice) (?:weekly|(?:each|per|a) (?:school )?week)\b/gi;
 const duration = /\b(\d+) minutes? (?:per|each|a) session\b/gi;
 
 // A deliberately narrow evidence verifier, not a fallback extractor. Only the model

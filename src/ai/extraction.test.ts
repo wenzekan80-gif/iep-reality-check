@@ -8,18 +8,26 @@ import { reconcile } from "../domain/reconcile";
 const clear = SYNTHETIC_EXAMPLES[0].text;
 const vague = SYNTHETIC_EXAMPLES[1].text;
 const good = (): Candidate => ({
-  service: { value: "Speech-Language Therapy", quote: "Speech-Language Therapy" },
-  weeklyFrequency: { value: 2, quote: "2 sessions each school week" },
+  service: { value: "Speech-Language Therapy", quote: "Speech-language pathology services" },
+  weeklyFrequency: { value: 2, quote: "twice weekly" },
   minutesPerSession: { value: 30, quote: "30 minutes per session" }, needsReview: false,
 });
 const unknown = (): Candidate => ({ service: { value: null, quote: null }, weeklyFrequency: { value: null, quote: null }, minutesPerSession: { value: null, quote: null }, needsReview: true });
 
 describe("model candidate evidence gate", () => {
-  it("accepts clear exact quotes and explains only the supported weekly plan", () => {
+  it("accepts the user's exact pathology/twice-weekly wording as speech therapy, 2 sessions, 30 minutes", () => {
+    expect(clear).toBe("FICTIONAL DEMO CASE — NO REAL STUDENT DATA\nSpeech-language pathology services will be provided twice weekly for 30 minutes per session.");
     const value = validateCandidate(good(), clear);
     expect(value).toEqual(good()); expect(canCompareWithEthan(value, clear)).toBe(true);
     expect(explainCandidate(value)).toContain("2 sessions each week, lasting 30 minutes each");
     expect(explainCandidate(value)).toContain("does not establish which days");
+  });
+  it("retains the previous numeric and spoken-frequency phrase coverage", () => {
+    for (const phrase of ["2 sessions each school week", "two times per week", "twice per week", "twice each school week"]) {
+      const text = `Ethan receives Speech-Language Therapy ${phrase}, 30 minutes per session.`;
+      const candidate = { ...good(), service: { value: "Speech-Language Therapy", quote: "Speech-Language Therapy" }, weeklyFrequency: { value: 2, quote: phrase } };
+      expect(validateCandidate(candidate, text)).toEqual(candidate);
+    }
   });
   it("preserves speech services as appropriate as unknown, with no numeric guessing", () => {
     const result = validateCandidate({ ...unknown(), service: { value: "Speech-Language Therapy", quote: "speech services" }, needsReview: false }, vague);
@@ -31,13 +39,13 @@ describe("model candidate evidence gate", () => {
   it.each([
     ["absent quote", { ...good(), weeklyFrequency: { value: 2, quote: null } }],
     ["fabricated quote", { ...good(), weeklyFrequency: { value: 2, quote: "twice each week" } }],
-    ["wrong frequency", { ...good(), weeklyFrequency: { value: 3, quote: "2 sessions each school week" } }],
+    ["wrong frequency", { ...good(), weeklyFrequency: { value: 3, quote: "twice weekly" } }],
     ["wrong duration", { ...good(), minutesPerSession: { value: 60, quote: "30 minutes per session" } }],
-    ["unrelated service quote", { ...good(), service: { value: "Speech-Language Therapy", quote: "Ethan" } }],
-    ["wrong service", { ...good(), service: { value: "Occupational Therapy", quote: "Speech-Language Therapy" } }],
+    ["unrelated service quote", { ...good(), service: { value: "Speech-Language Therapy", quote: "provided" } }],
+    ["wrong service", { ...good(), service: { value: "Occupational Therapy", quote: "Speech-language pathology services" } }],
     ["unitless numeric quote", { ...good(), minutesPerSession: { value: 30, quote: "30" } }],
     ["extra field", { ...good(), explanation: "School owes services" }],
-    ["null value with quote", { ...good(), weeklyFrequency: { value: null, quote: "2 sessions each school week" } }],
+    ["null value with quote", { ...good(), weeklyFrequency: { value: null, quote: "twice weekly" } }],
   ])("rejects %s", (_, candidate) => expect(() => validateCandidate(candidate, clear)).toThrow());
   it.each([
     "Speech-Language Therapy 2-3 sessions each school week, 30 minutes per session.",
@@ -48,7 +56,8 @@ describe("model candidate evidence gate", () => {
     "Speech-Language Therapy is not 2 sessions each school week, 30 minutes per session.",
     "Speech-Language Therapy 2 sessions each school week, 30 minutes per session or 45 minutes per session.",
   ])("keeps unsupported wording outside comparison: %s", text => {
-    expect(() => validateCandidate(good(), text)).toThrow();
+    const previousPhraseCandidate = { ...good(), service: { value: "Speech-Language Therapy", quote: "Speech-Language Therapy" }, weeklyFrequency: { value: 2, quote: "2 sessions each school week" } };
+    expect(() => validateCandidate(previousPhraseCandidate, text)).toThrow();
     const safe = validateCandidate(unknown(), text); expect(safe.needsReview).toBe(true);
     expect(canCompareWithEthan(safe, text)).toBe(false);
   });
@@ -56,7 +65,7 @@ describe("model candidate evidence gate", () => {
     expect(validateCandidate({ ...unknown(), needsReview: false }, "Unknown service").needsReview).toBe(true);
   });
   it("a clear custom excerpt is extraction-only; no borrowed Ethan scope", () => {
-    const text = clear.replace("Ethan", "Fictional Sam");
+    const text = "Fictional Sam: " + clear;
     expect(validateCandidate(good(), text).needsReview).toBe(false);
     expect(canCompareWithEthan(good(), text)).toBe(false);
   });
