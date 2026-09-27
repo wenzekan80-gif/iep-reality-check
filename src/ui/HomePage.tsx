@@ -3,13 +3,14 @@ import { HeroStory } from "./HeroStory";
 import { FamilyDrawing, GuardianSprite } from "./GuardianSprite";
 import "./home.css";
 
-export function HomePage({ data, onStart }: { data: DemoData; onStart: () => void }) {
+export function HomePage({ data, onStart, onAI }: { data: DemoData; onStart: () => void; onAI?: () => void }) {
   return <div className="home-page">
     <section className="landing-hero" aria-labelledby="home-title">
       <div className="landing-copy"><p className="eyebrow">AN IEP REVIEW NOTEBOOK</p>
         <h1 id="home-title" tabIndex={-1}>Check the records.<br /><em>Prepare for the IEP meeting.</em></h1>
         <p className="landing-description">Review the service plan,<br className="desktop-break" /> compare it with the records,<br className="desktop-break" /> and prepare questions for the meeting.</p>
         <button className="primary landing-cta" onClick={onStart}>Try Ethan’s fictional story <span aria-hidden="true">→</span></button>
+        {onAI && <button className="text-button" onClick={onAI}>Try AI with a synthetic excerpt →</button>}
         <p className="fictional-note">Fictional demo — no real student data.</p>
         <p className="gentle-promise"><span aria-hidden="true">◌</span> Questions grounded in the records.</p>
       </div>
