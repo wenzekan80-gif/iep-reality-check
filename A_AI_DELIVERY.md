@@ -15,14 +15,16 @@ Ethan's original demo remains one-click available. Only the clear approved speec
 
 ## Validation performed on this candidate
 
-- `npm test`: **PASS — 121/121 tests across 10 files**. All 68 existing tests retained and passing; 43 new server/evidence/adapter tests and 10 new UI tests.
+- `npm test`: **PASS — 122/122 tests across 10 files**. All 68 existing tests retained and passing; 44 new server/evidence/adapter tests and 10 new UI tests.
 - `npm run typecheck`: **PASS**.
 - `npm run build`: **PASS**, Next.js 16.3.5; static `/` and `/_not-found`, dynamic `/api/iep/extract`.
 - `git diff --check`: **PASS**.
 - `src/domain/`, `src/fixtures/`, `fixtures/`, `package.json` and `package-lock.json`: unchanged from the base. No new dependency.
 - No `console.*`, local/session storage, raw HTML rendering or `NEXT_PUBLIC` secret usage in the new AI path (bounded source scan).
 
-Logs are preserved locally (git-ignored): `outputs/ai-delivery/tests.log`, `typecheck.log`, `build.log`.
+Logs are preserved locally (git-ignored): initial `outputs/ai-delivery/tests.log`, `typecheck.log`, `build.log`; exact-wording follow-up `tests-followup.log`, `typecheck-followup.log`, `build-followup.log` in the same directory.
+
+Exact-wording follow-up: the clear public example now uses the user's exact sentence, “Speech-language pathology services will be provided twice weekly for 30 minutes per session.” The service quote maps to `Speech-Language Therapy`, “twice weekly” supports 2 sessions per week, and the duration remains 30 minutes. The model still proposes the values; independent evidence checks verify them. Existing numeric/spoken weekly phrase support is retained in a dedicated regression. Vague wording, scope confirmation, human provenance and all other guards are unchanged.
 
 Tests cover exact clear output; vague nulls; unknown values; absent/fabricated quotes; mismatched numeric and service meanings; conditional, negative, range, monthly, multi-service and prompt-instruction text; schema errors; no key/off switch; allowlist/mode/length/origin gates; per-process call bounds; timeout/abort; malformed/refused/incomplete/oversized/upstream errors; explicit confirmation; edit provenance into engine findings; source text safety; Needs review and all forward navigation; confirm → return → Needs review/paste; stale success after text change/restart; honest unavailable UI; preserved 10/300 initial and 11/330 late-evidence results.
 
@@ -44,7 +46,7 @@ Public allowlist: exact strings below, with one newline after the disclaimer; no
 
 ```text
 FICTIONAL DEMO CASE — NO REAL STUDENT DATA
-Ethan receives Speech-Language Therapy 2 sessions each school week, 30 minutes per session.
+Speech-language pathology services will be provided twice weekly for 30 minutes per session.
 ```
 
 ```text

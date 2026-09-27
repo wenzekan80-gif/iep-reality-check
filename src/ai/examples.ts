@@ -4,7 +4,7 @@ export const MAX_EXCERPT_LENGTH = 2400;
 export const SYNTHETIC_EXAMPLES = [
   {
     id: "ethan-clear", label: "Clear example",
-    text: "FICTIONAL DEMO CASE — NO REAL STUDENT DATA\nEthan receives Speech-Language Therapy 2 sessions each school week, 30 minutes per session.",
+    text: "FICTIONAL DEMO CASE — NO REAL STUDENT DATA\nSpeech-language pathology services will be provided twice weekly for 30 minutes per session.",
   },
   {
     id: "ethan-vague", label: "Vague example",
