@@ -1,5 +1,7 @@
 import { extractRequest } from "../../../../ai/server/service";
 
+// Compatibility path only: uses the same DeepSeek provider and flat response as /api/extract.
+
 export const runtime = "nodejs";
 export const maxDuration = 20;
 

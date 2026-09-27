@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { SYNTHETIC_EXAMPLES } from "./examples";
-import { canCompareWithEthan, explainCandidate, validateCandidate, type Candidate } from "./extraction";
+import { canCompareWithEthan, explainCandidate, extractionToCandidate, validateCandidate, validateExtraction, type Candidate } from "./extraction";
 import { confirmExtractedPlan } from "./confirmation";
 import { loadEthanDemo } from "../fixtures/ethan";
 import { reconcile } from "../domain/reconcile";
@@ -13,6 +13,42 @@ const good = (): Candidate => ({
   minutesPerSession: { value: 30, quote: "30 minutes per session" }, needsReview: false,
 });
 const unknown = (): Candidate => ({ service: { value: null, quote: null }, weeklyFrequency: { value: null, quote: null }, minutesPerSession: { value: null, quote: null }, needsReview: true });
+
+describe("flat extraction contract and existing candidate adapter", () => {
+  const sourceQuote = "Speech-language pathology services will be provided twice weekly for 30 minutes per session.";
+  const flat = { serviceName: "Speech-Language Therapy", sessionsPerPeriod: 2, minutesPerSession: 30, sourceQuote, needsReview: false };
+  it("maps the exact flat source quote into every known field without inventing evidence", () => {
+    expect(validateExtraction(flat, clear)).toEqual(flat);
+    const candidate = extractionToCandidate(flat, clear);
+    expect(candidate).toEqual({ service: { value: "Speech-Language Therapy", quote: sourceQuote }, weeklyFrequency: { value: 2, quote: sourceQuote }, minutesPerSession: { value: 30, quote: sourceQuote }, needsReview: false });
+    expect(canCompareWithEthan(candidate, clear)).toBe(true);
+  });
+  it.each([
+    { ...flat, sourceQuote: undefined }, { ...flat, sourceQuote: null }, { ...flat, sourceQuote: "" },
+    { ...flat, sourceQuote: " " }, { ...flat, sourceQuote: "Speech therapy twice weekly." },
+    { ...flat, sourceQuote: "twice weekly" }, { ...flat, sessionsPerPeriod: 3 },
+    { ...flat, needsReview: undefined }, { ...flat, extra: "unexpected" },
+  ])("rejects absent, fabricated, insufficient quotes or invalid fields", value => {
+    expect(() => validateExtraction(value, clear)).toThrow();
+  });
+  it("unknowns still require an exact quote and are always marked for review", () => {
+    const text = "The service details are unreadable.";
+    const value = { serviceName: null, sessionsPerPeriod: null, minutesPerSession: null, sourceQuote: text, needsReview: false };
+    expect(validateExtraction(value, text)).toEqual({ ...value, needsReview: true });
+    expect(() => validateExtraction({ ...value, sourceQuote: "missing" }, text)).toThrow();
+  });
+  it.each([
+    ["Speech therapy 2 sessions each month, 30 minutes per session.", null, 30],
+    ["Speech therapy 2-3 sessions each school week, 30 minutes per session.", null, 30],
+    ["Speech therapy twice weekly for 20-30 minutes per session.", 2, null],
+  ])("preserves separately clear fields while leaving unsupported units/ranges unknown: %s", (text, sessionsPerPeriod, minutesPerSession) => {
+    const value = { serviceName: "Speech-Language Therapy", sessionsPerPeriod, minutesPerSession, sourceQuote: text, needsReview: false };
+    const validated = validateExtraction(value, text);
+    expect(validated).toEqual({ ...value, needsReview: true });
+    expect(canCompareWithEthan(extractionToCandidate(validated, text), text)).toBe(false);
+    expect(() => validateExtraction({ ...value, sessionsPerPeriod: 2, minutesPerSession: 30 }, text)).toThrow();
+  });
+});
 
 describe("model candidate evidence gate", () => {
   it("accepts the user's exact pathology/twice-weekly wording as speech therapy, 2 sessions, 30 minutes", () => {

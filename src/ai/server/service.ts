@@ -1,8 +1,8 @@
 import "server-only";
 import { z } from "zod";
 import { approvedExample, MAX_EXCERPT_LENGTH } from "../examples";
-import { EvidenceError, validateCandidate } from "../extraction";
-import { openAIProvider, ProviderUnavailable, type ExtractionProvider } from "./provider";
+import { EvidenceError, validateExtraction } from "../extraction";
+import { deepSeekProvider, ProviderUnavailable, type ExtractionProvider } from "./provider";
 
 type Env = Record<string, string | undefined>;
 const bodySchema = z.object({ text: z.string().min(1).max(MAX_EXCERPT_LENGTH), synthetic: z.literal(true) }).strict();
@@ -27,7 +27,7 @@ export async function extractRequest(request: Request, options: {
 } = {}) {
   const env = options.env ?? process.env;
   if (env.IEP_AI_ENABLED !== "true") return error(503, "disabled", "AI extraction is switched off. Use Ethan’s original demo.");
-  if (!env.OPENAI_API_KEY?.trim()) return error(503, "unavailable", "AI extraction is not configured. Use Ethan’s original demo.");
+  if (!env.DEEPSEEK_API_KEY?.trim()) return error(503, "unavailable", "AI extraction is not configured. Use Ethan’s original demo.");
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin) return error(403, "origin", "Open this demo directly to try extraction.");
   if (!request.headers.get("content-type")?.startsWith("application/json")) return error(415, "format", "Send a synthetic text example as JSON.");
@@ -56,13 +56,13 @@ export async function extractRequest(request: Request, options: {
   const controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
-    const provider = options.provider ?? openAIProvider(env.OPENAI_API_KEY, env.OPENAI_MODEL?.trim() || "gpt-4.1-mini-2025-04-14");
+    const provider = options.provider ?? deepSeekProvider(env.DEEPSEEK_API_KEY, env.DEEPSEEK_MODEL?.trim() || "deepseek-flash");
     const output = await Promise.race([
       provider.extract(body.text, controller.signal),
       new Promise<never>((_, reject) => { timer = setTimeout(() => { controller.abort(); reject(new ProviderUnavailable()); }, options.timeoutMs ?? 15000); }),
     ]);
-    const candidate = validateCandidate(output, body.text);
-    return Response.json({ candidate, origin: "live-model", exampleId: approvedExample(body.text)?.id ?? null }, { headers });
+    const extraction = validateExtraction(output, body.text);
+    return Response.json(extraction, { headers });
   } catch (failure) {
     return failure instanceof EvidenceError ? error(422, "evidence", failure.message) : error(503, "unavailable", new ProviderUnavailable().message);
   } finally { clearTimeout(timer); controller.abort(); release(); }
