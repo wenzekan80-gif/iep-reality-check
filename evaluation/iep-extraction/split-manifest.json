@@ -1,0 +1,12 @@
+{
+  "datasetVersion": "1.0.0",
+  "assignmentStatus": "Fixed during dataset preparation before any optimization or model evaluation",
+  "assignmentMethod": "Manual scenario allocation, not a measured or random sample",
+  "development": [
+    "iep-syn-001", "iep-syn-002", "iep-syn-003", "iep-syn-004", "iep-syn-005", "iep-syn-006",
+    "iep-syn-007", "iep-syn-008", "iep-syn-009", "iep-syn-010", "iep-syn-011", "iep-syn-012",
+    "iep-syn-013", "iep-syn-014", "iep-syn-015", "iep-syn-016", "iep-syn-017", "iep-syn-018"
+  ],
+  "heldout": ["iep-syn-019", "iep-syn-020", "iep-syn-021", "iep-syn-022", "iep-syn-023", "iep-syn-024"],
+  "heldoutPolicy": "Do not upload, adapt, train on, select prompts from, or repeatedly tune against heldout examples. If exposed to optimization, retire this split and create a new heldout set."
+}

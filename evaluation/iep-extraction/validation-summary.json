@@ -1,0 +1,66 @@
+{
+  "datasetStatus": "PREPARED",
+  "localDataAudit": "PASS",
+  "modelEvaluationStatus": "NOT RUN",
+  "adaptionStatus": "NOT RUN",
+  "datasetVersion": "1.0.0",
+  "auditedAt": "2026-09-27T18:04:41.807Z",
+  "sourceExamples": 24,
+  "splitCounts": {
+    "development": 18,
+    "heldout": 6
+  },
+  "scopeCounts": {
+    "other_service_challenge": 2,
+    "review_challenge": 14,
+    "weekly_speech_candidate": 8
+  },
+  "categoryCounts": {
+    "alternate_week_frequency": 1,
+    "clear_weekly_compound_duration": 1,
+    "clear_weekly_defined_abbreviation": 1,
+    "clear_weekly_named_days": 1,
+    "clear_weekly_number_words": 1,
+    "clear_weekly_numeric": 1,
+    "clear_weekly_shorthand": 1,
+    "clear_weekly_table": 1,
+    "clear_weekly_words": 1,
+    "conflicting_frequency": 1,
+    "duration_range": 1,
+    "frequency_range": 1,
+    "missing_duration": 1,
+    "missing_frequency": 2,
+    "missing_frequency_and_duration": 1,
+    "missing_service_name": 1,
+    "monthly_frequency": 1,
+    "multiple_services_combined_allocation": 1,
+    "multiple_services_no_target": 1,
+    "negated_current_historical_numbers": 1,
+    "nonuniform_session_duration": 1,
+    "other_service_clear_weekly": 2
+  },
+  "needsReviewCount": 14,
+  "uniqueIds": 24,
+  "uniqueInputs": 24,
+  "uniqueNormalizedInputs": 24,
+  "sourceQuoteExactSubstringPasses": 24,
+  "contractTypePasses": 24,
+  "splitManifestCoveragePasses": 24,
+  "developmentExportRows": 18,
+  "heldoutExportRows": 6,
+  "heldoutRowsInDevelopmentExport": 0,
+  "sha256": {
+    "examples.jsonl": "e2136b3f589d8951989a77a0b46a435cebab4aa1a95b98b0a1d276126244cc79",
+    "split-manifest.json": "c3efb01e730447b7a1ee659b382a8de5dc08e83f8fcde018242f477759e3e882",
+    "extraction-instruction.txt": "b004ed001790d065724c47c6ebc9114e4953985913355c5399ab92c4062f5b6c",
+    "development.adaption.jsonl": "2c6ac89ac0a159c987d4237183b3813816c11e1ef4a5fb5d94390cc337782c26",
+    "heldout.jsonl": "f14411e4b5bcb0f903ffc936438d97ea09f6f9da022fd386872f3eeb1739df8e"
+  },
+  "limitations": [
+    "Local audit validates fixture integrity, not extraction accuracy or semantic correctness.",
+    "No model, endpoint, Adaption account, upload, adaptation, optimization, or platform evaluation was invoked.",
+    "Reference labels were manually specified during synthetic fixture authoring; no independent educator adjudication.",
+    "Normalized duplicate detection is exact after case and whitespace normalization, not a semantic near-duplicate detector.",
+    "The heldout set is small, task-authored, and not a statistically representative external benchmark."
+  ]
+}
