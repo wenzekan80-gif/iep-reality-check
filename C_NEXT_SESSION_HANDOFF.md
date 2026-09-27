@@ -1,3 +1,19 @@
+# Current priority: accepted AI code candidate, key deferred
+
+Updated 2026-09-28. The user requested IEP clause extraction, uncertainty and a plain-language reading aid, then explicitly chose to finish code first and configure a key later.
+
+- Use `D:\IEP-Reality-Check-ai-release`, branch `release/iep-ai-candidate-20260927` for candidate continuation. Do not confuse it with the stable Notebook checkout or the earlier synthetic release.
+- Accepted integrated product: `a059b6a42a29ee8570120f6aace2b617b9f339b7`; A commits `2434f5b` and `998d0d9`. Later commits are release documentation only.
+- B independently passed 122 tests, typecheck, build and bounded sensitive-pattern scans. C passed actual local-browser stable full flow and disabled / enabled-without-key behavior.
+- Genuine provider success and genuine AI browser chain remain BLOCKED. No key configured, no AI production deployment, no fabricated model success. Public mode accepts exactly two synthetic snippets including the user's pathology / twice-weekly sentence.
+- Local preview retained at http://127.0.0.1:3143/ (Next production build; enabled switch, no key). Check the port/process before restarting. Temporary test server3142 was stopped.
+- Stable main remains `7f1d609`; recovery tag `pre-ai-stable-7f1d609` is pushed. Live https://iep-reality-check.vercel.app remains the Notebook synthetic release.
+- Next only when credentials are available: configure server env, observe genuine clear/vague output, browser-test AI confirmation/engine and remote runtime, then consider production promotion. Do not substitute mocked tests for this gate.
+- Read `C_RELEASE_REPORT.md`, `FEATURE_TRUTH_TABLE.md`, `FINAL_RELEASE_CHECKLIST.md`, `B_AI_ACCEPTANCE.md`, `A_AI_DELIVERY.md` first. Reports scope VERIFIED rows to their evidence.
+- Submission has not advanced: last observed Devpost incomplete draft; public video NOT CREATED; earlier local video is historical and does not show Notebook or AI. Team/disclosure/eligibility information remains pending.
+
+---
+Historical handoff follows. It is superseded for current candidate facts by the section above.
 # Current continuation: Notebook / Flipbook UI
 
 - Published with explicit user authorization on 2026-09-27 at about 22:01 Asia/Shanghai. Product commit `c5f73006acc10a3588a1051ef1d891e51575c186` is on GitHub `main` and `ui/notebook-polish-20260927` and deployed to https://iep-reality-check.vercel.app .
@@ -39,3 +55,4 @@
 - Next: incorporate user replies; upload only when authorized; verify hosted duration and anonymous playback; update Devpost with actual video URL and complete disclosures. Only after all materials are ready request any required final rules/terms agreement, execute authorized final submission, and inspect actual Submitted confirmation.
 - Reports: `FEATURE_TRUTH_TABLE.md`, `C_RELEASE_REPORT.md`, `FINAL_RELEASE_CHECKLIST.md`, `B_RELEASE_RECHECK.md`, `D_SUBMISSION_COPY.md`. Saved browser proof: `outputs/release-evidence/c-devpost-copy-preview.*`, `c-devpost-progress-3of4.*`, `c-devpost-schedule.txt`, `c-youtube-upload-target.png`. C subsequently saved and verified the video-tool disclosure; see `c-devpost-media-disclosure.txt`.
 - Do not repeat full product tests for documentation/media-only changes. Keep product and audit commits distinct. Do not publish credentials, raw auth files or the Devpost team invite URL.
+
