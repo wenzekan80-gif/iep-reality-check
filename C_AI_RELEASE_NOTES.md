@@ -12,7 +12,7 @@ Date: 2026-09-27 (Asia/Shanghai). C coordinates integration, validation and depl
 - C checkout: `D:\IEP-Reality-Check-ai-release`, branch `release/iep-ai-candidate-20260927`.
 - Managed worktree creation was attempted after an empty artifact inventory and returned Not a git repository for the chat rooted at D:\. Git worktrees were created against the verified repository as fallback.
 - The current configuration does not enable static export. The existing stable version has no runtime AI routes. A new route must use the Next server runtime.
-- No OPENAI_API_KEY is present in the current process or user environment, and no env file exists at the new C checkout. Values were not read or logged. Provider choice is pending the user; missing credentials do not block implementation but do block genuine model verification.
+- No OPENAI_API_KEY is present in the current process or user environment, and no env file exists at the new C checkout. Values were not read or logged. A fresh scoped Vercel query also found no production environment variables. The user chose to finish code first and configure a key later. The implementation uses OpenAI; genuine model verification remains deferred until credentials are configured.
 
 ## Authorized candidate scope
 
@@ -35,3 +35,13 @@ The Notebook/Flipbook presentation and complete Ethan synthetic flow are preserv
 ## Current state
 
 Implementation: IN DEVELOPMENT. B exact-commit acceptance: BLOCKED pending A delivery. Live provider validation: BLOCKED pending server credentials. AI production release: NOT CREATED. Stable production remains the existing Notebook version.
+
+## Server configuration contract (implementation pending acceptance)
+
+- `IEP_AI_ENABLED=true`: explicit server enable switch; absent/false fails closed.
+- `OPENAI_API_KEY`: server-only provider credential. Never prefix with NEXT_PUBLIC, commit it, or include its value in reports.
+- `OPENAI_MODEL`: optional; A reports the default as `gpt-4.1-mini-2025-04-14`.
+- `IEP_AI_LOCAL_CUSTOM=true`: optional development-only loopback mode for custom synthetic text. Public mode accepts exact allowlisted synthetic examples only.
+- A reports a 2,400-character input cap, 12 KB request body cap, 15-second provider timeout, 1,000 output token cap, and 32 KB provider response cap. Concurrency/rate protection is process-local (2 concurrent / 6 calls per minute); it is not a global budget.
+
+These are the intended contract reported by A, not B acceptance. With the user's deferred-key choice, C will finish implementation integration and local acceptance of code and unavailable behavior, retain stable production, and record genuine provider / AI production gates as BLOCKED.
