@@ -1,5 +1,7 @@
 # C Release Report
 
+> Historical stable-release audit below. The later Notebook UI and copy were published on 2026-09-27 with user authorization: product `c5f7300`, production deployment `dpl_E7SXHAABKudWHarsT4Ur73MtQPLk`, live https://iep-reality-check.vercel.app . See `NOTEBOOK_UI_REVIEW.md` and the current section of `C_NEXT_SESSION_HANDOFF.md`. The original stable tag/deployment remain rollback references. Submission/media status was not advanced by this UI publication.
+
 Audit date: 2026-09-27 (Asia/Shanghai). Role: release facts, integration, deployment and final acceptance; no AI implementation.
 
 ## Intake baseline and current version

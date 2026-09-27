@@ -1,4 +1,18 @@
-# Current continuation: parchment interface
+# Current continuation: Notebook / Flipbook UI
+
+- Published with explicit user authorization on 2026-09-27 at about 22:01 Asia/Shanghai. Product commit `c5f73006acc10a3588a1051ef1d891e51575c186` is on GitHub `main` and `ui/notebook-polish-20260927` and deployed to https://iep-reality-check.vercel.app .
+- Production deployment: `dpl_E7SXHAABKudWHarsT4Ur73MtQPLk`; immutable URL https://iep-reality-check-natjiaqw6-kazz5.vercel.app . Official CLI reports READY / production and aliases the existing domain. Manual deploy; GitHub auto-deploy was not connected.
+- Public browser smoke passed the updated copy, confirmation, sources/Escape/focus return, two initial meeting questions, added Sep 18 record and one remaining make-up question. Actual before/after: `10/300/1/1/2` to `11/330/1/0/1` (documented/minutes/explained/unresolved/questions). Anonymous HTTP and local font/grain requests returned 200; browser warning/error log empty. Receipts: `outputs/notebook-release/`.
+- Latest user request explicitly asks for Notebook / Flipbook polish while keeping domain, reconciliation, data flow and the single-route React architecture intact.
+- Active worktree: `D:\IEP-Reality-Check-parchment`; branch `ui/notebook-polish-20260927`, based on `c83c339`. Read actual HEAD/status. Product and publication documentation are separate commits.
+- Implemented cover and three paper spreads, responsive binding/tabs/dog-ear navigation, isolated 680 ms CSS flip, source highlights, 960 ms real-result evidence resolution, finite SVG Lumi cues and reduced-motion/print handling.
+- Fresh checks: 68 tests, typecheck and build PASS. Local browser flow, source focus return, 320–1440px layouts and print CSS verified. Native print export is unavailable in the in-app browser; pagination is not verified.
+- Preview: http://127.0.0.1:3141 . Start from this worktree with `npm run build` then `npm start -- --hostname 127.0.0.1 --port 3141` if needed.
+- The subsequent copy-only pass changed UI labels/prose and exact-text tests only; its AST comparison and fresh 68-test/typecheck/build receipts are in `outputs/copy-review/`. The publication reused those exact-source checks; the remote Vercel build also passed.
+- See `NOTEBOOK_UI_REVIEW.md`, `outputs/notebook-review/` and `outputs/notebook-release/`. No dependency, domain, fixture or engine changes. Source adapters retain the same logic; two display labels in `demo-data.ts` were shortened.
+- Stable tags and the previous deployment remain rollback references. No video upload or Devpost submission occurred. Existing media still shows the older UI; the old submission questions remain parked.
+
+# Previous local parchment checkpoint
 
 - The user explicitly corrected the prior priority: “不对，我们是要把界面改成羊皮纸风格”. The active task is the parchment restyle. Submission work and its unanswered questions are parked.
 - Current worktree: `D:\IEP-Reality-Check-parchment`; branch `ui/parchment-style-20260927`. Read actual HEAD/status before continuing.
