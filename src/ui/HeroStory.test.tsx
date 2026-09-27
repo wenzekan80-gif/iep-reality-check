@@ -19,7 +19,7 @@ afterEach(() => { cleanup(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.resto
 describe("guardian homepage story", () => {
   it("uses the requested copy and CTA with a fictional family introduction", () => {
     const start = vi.fn(); render(<HomePage data={loadEthanDemo()} onStart={start} />);
-    expect(screen.getByRole("heading", {level:1})).toHaveTextContent("You know your child.We help you understand the paperwork.");
+    expect(screen.getByRole("heading", {level:1})).toHaveTextContent("Check the records.Prepare for the IEP meeting.");
     expect(screen.getByText("Fictional demo — no real student data.")).toBeInTheDocument();
     expect(screen.getByText("Ethan and Mike are fictional characters created for this demo.")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", {name:"Try Ethan’s fictional story"}));
@@ -85,7 +85,7 @@ describe("guardian homepage story", () => {
     expect(screen.getAllByLabelText("Documented")).toHaveLength(11);
     expect(screen.queryByLabelText("Needs clarification")).not.toBeInTheDocument();
     expect(screen.getByLabelText("Explained cancellation")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", {name:"Show moment 6: Ready for the meeting"}));
+    fireEvent.click(screen.getByRole("button", {name:"Show moment 6: Meeting notes"}));
     expect(screen.getByText("Was a make-up session offered?")).toBeInTheDocument();
     expect(data).toEqual(original);
   });

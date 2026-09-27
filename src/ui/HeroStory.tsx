@@ -7,7 +7,7 @@ import { reconcile } from "../domain/reconcile";
 import { FamilyDrawing, GuardianSprite } from "./GuardianSprite";
 
 export const STORY_BEAT_MS = 2500;
-export const STORY_BEATS = ["A stack of questions", "Understand the plan", "Check the records", "Needs clarification", "New evidence", "Ready for the meeting"] as const;
+export const STORY_BEATS = ["The files on hand", "Understand the plan", "Check the records", "Needs clarification", "New evidence", "Meeting notes"] as const;
 
 // Uses the same fictional evidence as the interactive demo. Animation never changes demo state.
 export function HeroStory({ data }: { data: DemoData }) {
@@ -38,15 +38,15 @@ export function HeroStory({ data }: { data: DemoData }) {
   const plan = data.initial.prescription;
   const result = beat >= 4 ? updated : initial;
   const descriptions = [
-    "An IEP, service records, an email, a note. Mike needs a clearer place to start.",
-    "A few important details, brought into focus.",
-    "Six fictional weeks. A place for every record, and every question.",
+    "Mike has an IEP, service records, a school email, and a note.",
+    "Check the number of weekly sessions and minutes per session.",
+    "Compare the plan with six fictional weeks of records.",
     "No matching record for one planned session was located in the files provided.",
-    "Record found. A little more evidence, a little less uncertainty.",
-    "The records are clearer. The make-up session question remains.",
+    "The September 18 record is now included.",
+    "Ask whether a make-up session was offered.",
   ];
   return <section className="guardian-story" aria-label="Ethan’s story in six moments" data-playing={playing} data-reduced-motion={reduced} data-story-beat={beat}>
-    <div className="story-topline"><span>FROM PAPERWORK TO A PLAN</span><span className="story-fiction">A fictional story</span></div>
+    <div className="story-topline"><span>PLAN → RECORDS → QUESTIONS</span><span className="story-fiction">A fictional story</span></div>
     <div className={`story-stage beat-${beat}`}>
       <svg className="glass-motif" viewBox="0 0 500 400" aria-hidden="true"><g stroke="#becbc2" strokeWidth="1" opacity=".45"><path d="M245 20L433 92L458 252L337 357L137 326L47 164L136 51Z" fill="#e7eee5"/><path d="M245 20L245 182L433 92M245 182L458 252M245 182L337 357M245 182L137 326M245 182L47 164M245 182L136 51"/><path d="M245 20L433 92L245 182Z" fill="#dbe7e9"/><path d="M245 182L458 252L337 357Z" fill="#eee2c4"/></g></svg>
       <div className="scene-content" key={beat}>
@@ -74,13 +74,13 @@ export function HeroStory({ data }: { data: DemoData }) {
           {beat === 3 && <div className="clarification-tag"><span aria-hidden="true">?</span> Needs clarification</div>}
           {beat === 4 && <div className="new-evidence-card"><span className="record-check" aria-hidden="true">✓</span><div>Sep 18 Speech Record<small>{data.lateRecord.minutes} minutes <span>· Record found</span></small></div></div>}
         </div>}
-        {beat === 5 && <div className="meeting-scene"><div className="story-clean-card meeting-ready"><span className="tiny-heading">A CALMER CONVERSATION</span><h3>Ready for the meeting</h3><p><span aria-hidden="true">✓</span> What the plan says</p><p><span aria-hidden="true">✓</span> What the records show</p><div className="remaining-question"><strong>{updated.summary.openMeetingQuestions}</strong> question to clarify</div><small>Was a make-up session offered?</small></div></div>}
+        {beat === 5 && <div className="meeting-scene"><div className="story-clean-card meeting-ready"><span className="tiny-heading">MEETING NOTES</span><h3>Notes for the meeting</h3><p><span aria-hidden="true">✓</span> What the plan says</p><p><span aria-hidden="true">✓</span> What the records show</p><div className="remaining-question"><strong>{updated.summary.openMeetingQuestions}</strong> question to clarify</div><small>Was a make-up session offered?</small></div></div>}
       </div>
       <div className="guardian-position"><GuardianSprite happy={beat >= 4} /></div>
     </div>
     <div className="story-caption" aria-live={playing ? "off" : "polite"} aria-atomic="true"><span className="story-step">0{beat + 1} / 06</span><h2>{STORY_BEATS[beat]}</h2><p>{descriptions[beat]}</p>{beat === 3 && <p className="story-caution">This does not mean the service did not occur.</p>}</div>
     <div className="story-controls"><div className="beat-buttons" role="group" aria-label="Choose a story moment">{STORY_BEATS.map((title, index) => <button key={title} type="button" aria-label={`Show moment ${index + 1}: ${title}`} aria-pressed={beat === index} onClick={() => { setBeat(index); setPaused(true); }}><span /></button>)}</div>
-      {reduced ? <span className="motion-off">Motion off · explore at your pace</span> : <button type="button" className="play-control" onClick={() => setPaused(value => !value)}><span aria-hidden="true">{paused ? "▷" : "Ⅱ"}</span>{paused ? "Play story" : "Pause story"}</button>}
+      {reduced ? <span className="motion-off">Motion off · choose a moment</span> : <button type="button" className="play-control" onClick={() => setPaused(value => !value)}><span aria-hidden="true">{paused ? "▷" : "Ⅱ"}</span>{paused ? "Play story" : "Pause story"}</button>}
     </div>
   </section>;
 }

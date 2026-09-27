@@ -36,6 +36,6 @@ export const statusDisplay = {
   documented: { label: "Documented", symbol: "✓" },
   explained: { label: "Explained", symbol: "i" },
   unresolved: { label: "Needs clarification", symbol: "?" },
-  not_comparable: { label: "Please confirm", symbol: "?" },
-  conflict: { label: "Records need a closer look", symbol: "↔" },
+  not_comparable: { label: "Needs confirmation", symbol: "?" },
+  conflict: { label: "Review records", symbol: "↔" },
 } as const;

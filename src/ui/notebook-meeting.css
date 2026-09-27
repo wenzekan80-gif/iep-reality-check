@@ -1,0 +1,229 @@
+/* The meeting spread is a presentation of the existing printable notes. */
+@media screen {
+  .notebook-theme .meeting-margin-note,
+  .notebook-theme .meeting-takeaway-note {
+    font-family: var(--handwritten, "Segoe Print", "Bradley Hand", cursive);
+    font-size: 23px;
+    line-height: 1.25;
+    color: #49627b;
+  }
+
+  .notebook-theme .meeting-margin-note {
+    display: inline-block;
+    margin: 0 0 25px;
+    transform: rotate(-3deg);
+  }
+
+  .notebook-theme .meeting-overview {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .notebook-theme .meeting-overview > section {
+    position: relative;
+    padding: 0 0 22px;
+    border-bottom: 1px solid #788c9f38;
+  }
+
+  .notebook-theme .meeting-overview > section + section {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 0;
+  }
+
+  .notebook-theme .meeting-overview h2 {
+    font-family: var(--serif, Georgia, serif);
+    font-size: clamp(21px, 1.9vw, 26px);
+    line-height: 1.25;
+    margin: 7px 0 14px;
+  }
+
+  .notebook-theme .meeting-overview p {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .notebook-theme .meeting-overview .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.8px;
+  }
+
+  .notebook-theme .meeting-overview .small {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  .notebook-theme .meeting-overview > section:last-child {
+    padding: 20px 22px;
+    margin: 2px 0 8px;
+    border: 1px solid #879b8138;
+    background: var(--paper-grain), linear-gradient(110deg, #eaf0d9, #dfe7ce);
+    box-shadow: 1px 4px 7px #51482c12;
+  }
+
+  .notebook-theme .meeting-overview > section:last-child::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 35%;
+    width: 76px;
+    height: 19px;
+    background: #d9bd8173;
+    transform: rotate(-4deg);
+    pointer-events: none;
+  }
+
+  .notebook-theme .meeting-handwritten-heading {
+    position: relative;
+    display: table;
+    max-width: 100%;
+    padding-bottom: 14px;
+    margin: 0 0 12px;
+    font-family: var(--handwritten, "Segoe Print", "Bradley Hand", cursive);
+    font-size: clamp(33px, 3.4vw, 48px);
+    font-weight: 600;
+    line-height: 1.14;
+    color: var(--ink);
+    transform: rotate(-2deg);
+  }
+
+  .notebook-theme .meeting-handwritten-heading svg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 16px;
+    stroke: #bd5b78;
+    stroke-width: 2.3;
+    stroke-linecap: round;
+    pointer-events: none;
+  }
+
+  .notebook-theme .meeting-questions { margin-top: 15px; }
+  .notebook-theme .meeting-questions .section-heading {
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .notebook-theme .meeting-questions .section-heading h2 {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .notebook-theme .meeting-questions .count-pill {
+    flex: 0 0 26px;
+    border: 1px solid #83937970;
+    background: #e6ecd9;
+  }
+
+  .notebook-theme .meeting-questions .question-list { gap: 21px; }
+  .notebook-theme .meeting-questions .question-card {
+    gap: 13px;
+    padding: 0 0 20px;
+    border: 0;
+    border-bottom: 1px solid #788c9f38;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .notebook-theme .meeting-questions .question-card > div { min-width: 0; }
+  .notebook-theme .meeting-questions .question-number {
+    display: grid;
+    place-items: center;
+    flex: 0 0 31px;
+    height: 31px;
+    border: 1.5px solid #9d805f;
+    border-radius: 45% 52% 43% 48%;
+    font-family: var(--handwritten, "Segoe Print", "Bradley Hand", cursive);
+    font-size: 18px;
+    line-height: 1;
+    color: #74573c;
+    transform: rotate(-6deg);
+  }
+
+  .notebook-theme .meeting-questions .question-card h3 {
+    padding-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .notebook-theme .meeting-questions .question-card blockquote {
+    font-family: var(--serif, Georgia, serif);
+    font-size: clamp(18px, 1.55vw, 21px);
+    line-height: 1.55;
+    margin: 10px 0 14px;
+  }
+
+  .notebook-theme .meeting-questions .question-card .small { font-size: 12px; }
+  .notebook-theme .meeting-sources { margin-top: 25px; }
+  .notebook-theme .meeting-sources h2 { font-size: 16px; }
+  .notebook-theme .meeting-sources .source-links { gap: 0 17px; }
+  .notebook-theme .meeting-sources .source-links button { min-height: 44px; }
+
+  .notebook-theme .meeting-print-action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px dashed #9c8a6e66;
+  }
+
+  .notebook-theme .meeting-takeaway-note {
+    padding: 7px 14px;
+    font-size: 21px;
+    background: var(--paper-grain), #f2dbe0;
+    box-shadow: 1px 3px 4px #74514517;
+    transform: rotate(-3deg);
+  }
+
+  .notebook-theme .meeting-late-action { margin-top: 24px; }
+  .notebook-theme .meeting-late-action .late-record {
+    flex-wrap: wrap;
+    margin-top: 0;
+    padding: 18px;
+  }
+
+  .notebook-theme .meeting-late-action .late-copy { flex-basis: 70%; }
+  .notebook-theme .meeting-late-action .late-record > .primary { width: 100%; }
+
+  @media (max-width: 600px) {
+    .notebook-theme .meeting-questions .question-card { gap: 10px; }
+    .notebook-theme .meeting-overview > section:last-child { padding: 19px 17px; }
+    .notebook-theme .meeting-print-action .secondary { width: 100%; }
+  }
+}
+
+@media print {
+  .notebook-theme .meeting-spread,
+  .notebook-theme .meeting-notes-page,
+  .notebook-theme .meeting-questions-page {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+    transform: none;
+  }
+
+  .notebook-theme .meeting-spread::before,
+  .notebook-theme .meeting-spread::after,
+  .notebook-theme .meeting-notes-page::before,
+  .notebook-theme .meeting-notes-page::after,
+  .notebook-theme .meeting-questions-page::before,
+  .notebook-theme .meeting-questions-page::after { display: none; }
+}
