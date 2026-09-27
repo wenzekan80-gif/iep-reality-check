@@ -1,46 +1,53 @@
 # Final Release Checklist
 
-Updated 2026-09-28. Accepted candidate product **b2bc2d982730676280bfc844f848ab8f4986d128**. Stable public main 7f1d609. This is not submission confirmation.
+Updated 2026-09-28. Frozen product **b2bc2d982730676280bfc844f848ab8f4986d128**. **Devpost SUBMITTED**, with actual confirmation at 03:30 Asia/Shanghai.
 
-## Minimal DeepSeek candidate
+## Version and release
 
-- [x] Read actual Git/HEAD/branches/remotes, README, package and Next configuration.
-- [x] Preserve pre-ai-stable-7f1d609 recovery tag and public Notebook baseline.
-- [x] A develops in separate checkout; C integrates named commits; B tests exact integrated commit.
-- [x] Server POST /api/extract uses DeepSeek and DEEPSEEK_API_KEY only; exactly five success fields.
-- [x] Existing Zod, null unknowns and mandatory exact source substring; reject invalid results.
-- [x] Candidate only; Confirm/Edit/Needs review and explicit fictional scope precede unchanged reconcile.
-- [x] No domain/model/engine/fixture/style/dependency refactor.
-- [x] Public synthetic allowlist, length/body/output caps, timeout, off switch, per-process call gate.
-- [x] B bounded client/source/log and actual-key checks found zero leaks.
-- [x] B fresh npm test: 156/156; npm run typecheck PASS; npm run build PASS.
-- [x] C actual local production build: real DeepSeek clear response Speech / 2 / 30 and exact quote.
-- [x] C real vague response: null frequency/duration, needsReview=true and blocked comparison.
-- [x] C real browser: highlights → review pause → human edit/provenance → explicit scope/Confirm → timeline/source/meeting.
-- [x] C late record recomputes 10/300/1/1/2 → 11/330/1/0/1, with source and final question.
-- [x] Original Ethan fallback still performs the unchanged 300→330 flow, without another API call.
-- [x] Captured local browser warn/error logs empty.
-- [x] Prepare 24 synthetic references, fixed 18/6 split, import-ready export and local integrity validator.
-- [x] Mark Adaption and 24-row model evaluation NOT RUN; no runtime dependency or usage claim.
+- [x] Read actual Git/HEAD/branch/remotes, README, package and Next configuration; no assumed historical HEAD.
+- [x] Keep `pre-ai-stable-7f1d609`; push final product tag `iep-deepseek-final-b2bc2d9`.
+- [x] A delivered separate named commits; C integrated; B tested exact product.
+- [x] Preserve deterministic reconciliation, domain, fixtures and existing UI architecture.
+- [x] B: npm test **156/156**, npm run typecheck PASS, npm run build PASS.
+- [x] Runtime-capable Vercel deployment and remote build; no static export.
+- [x] Server-only DeepSeek secret and enabled switch configured; no client/public-env key.
+- [x] Public synthetic allowlist, input/output/time limits, off switch and per-process call protection.
+- [x] Seven anonymous production scripts scanned without actual-key/secret matches; 422 and 403 guards verified.
+- [x] Preserve prior deployment rollback; freeze accepted scope.
+- [x] Public GitHub main contains the accepted product; closeout changes are documentation only.
 
-## Gates not closed by local acceptance
+## Actual production browser chain
 
-- [ ] Configure DeepSeek credentials and enable switch in deployment server environment when publishing AI.
-- [ ] Deploy this accepted candidate on a runtime-capable platform; AI production URL currently NOT CREATED.
-- [ ] Verify anonymous production AI clear/vague flow, Ethan fallback and entire primary browser chain.
-- [ ] Recheck deployed client/log credential boundaries and retain rollback before public feature freeze.
-- [ ] If claiming model quality, execute the fixed heldout/model evaluation and publish actual results.
-- [ ] If claiming Adaption use/optimization, actually run it and retain platform/result evidence first.
+- [x] Home.
+- [x] Original Ethan stable demo and plan confirmation.
+- [x] Genuine DeepSeek clear excerpt → exact quote/card → explicit scope/Confirm → engine.
+- [x] Timeline, source drawer and AI/human provenance.
+- [x] Meeting prep: two questions.
+- [x] Late record and recalculation: 10/300/1/1/2 → 11/330/1/0/1.
+- [x] Genuine vague response: null frequency/duration, Needs review and blocked progression.
+- [x] Original no-API fallback still works; no current application-origin errors in captured logs.
+- [x] B independently checked anonymous public access, refs, archive/deployment and C evidence consistency.
 
-Public production was not modified in this round. The existing local process credential enabled two real test calls; no key file or Vercel env change was made. A per-process limiter is not a hard global budget.
+## Media and final submission
 
-## Submission closeout remains separate
+- [x] Actual edited production recording with English synthesized narration/captions: **144.500 seconds**, below three minutes.
+- [x] Full MP4 decode, audio checks and decoded visual review passed.
+- [x] Final video uploaded: https://youtu.be/j-oMMVlKwPk . Unlisted setting permits anyone with the link; anonymous public oEmbed works; actual browser playback reached the end. Separate signed-out-browser playback was not completed.
+- [x] Correct video embedded and real 3:2 product cover saved in Devpost.
+- [x] User confirms sole real contributor, student eligibility and hack-period work; actual roster checked.
+- [x] Runtime/API/AI development, frameworks, font and media tools disclosed; personal inspiration and 星星点灯公益服务 thanks included.
+- [x] User accepted binding terms at action time; final Submit project performed.
+- [x] **“Project submitted!” and “Submitted to LexHack 2026” actually observed**, not Draft or Already have a team.
+- [x] Confirmation, screenshots, exact media hash and handoff saved.
 
-- [x] Real repository and stable live URLs exist; inherited public acceptance preserved.
-- [ ] Recheck anonymous access against the final submitted release.
-- [ ] Produce current UI/AI video at most 3 minutes, upload and verify playback without judge login.
-- [ ] Confirm all real team members and complete technology/API/AI development-tool disclosures.
-- [ ] Confirm eligibility/original hack-period work using actual contributor facts.
-- [ ] Finish Devpost and obtain actual Submitted / confirmation evidence.
+## Explicitly unclaimed / remaining limits
 
-Last observed Devpost: Draft / 3 of 4 / INCOMPLETE SUBMISSION, not revisited this round. Public video: NOT CREATED. The earlier 148-second local recording is historical and does not demonstrate this Notebook/AI candidate.
+- Adaption use/optimization and 24-row model accuracy: **NOT RUN**. Prepared 24 synthetic references and 18/6 split are verified preparation only.
+- Per-process limits are not a distributed or hard global budget; arbitrary real-student intake is unsupported.
+- Eligibility and origin are the contributor's declarations, not independently audited facts.
+- YouTube copyright processing was initially pending; its final background outcome was not used as evidence. The uploaded video was already published and playable.
+- No new features, general parsing, or visual redesign after freeze.
+
+Live: https://iep-reality-check.vercel.app
+Repo: https://github.com/wenzekan80-gif/iep-reality-check
+Submitted project: https://devpost.com/software/iep-reality-check
