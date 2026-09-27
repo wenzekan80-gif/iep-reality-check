@@ -9,6 +9,28 @@ const bodySchema = z.object({ text: z.string().min(1).max(MAX_EXCERPT_LENGTH), s
 const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
 const error = (status: number, code: string, message: string) => Response.json({ code, message }, { status, headers });
 
+function sameRequestOrigin(request: Request) {
+  const origin = request.headers.get("origin");
+  if (origin === null) return true; // Preserve non-browser callers; this is not authentication.
+  try {
+    const requestUrl = new URL(request.url);
+    const originUrl = new URL(origin);
+    if (origin !== originUrl.origin || !["http:", "https:"].includes(originUrl.protocol) ||
+      originUrl.protocol !== requestUrl.protocol) return false;
+    const host = request.headers.get("host");
+    if (!host) return origin === requestUrl.origin;
+    if (/[\\/\s,@?#]/.test(host)) return false;
+    const hostUrl = new URL(`${requestUrl.protocol}//${host}`);
+    if (originUrl.host !== hostUrl.host) return false;
+    if (hostUrl.host === requestUrl.host) return true;
+    // NextURL normalizes loopback addresses to localhost. Require the browser's
+    // actual Host, same protocol/port, and this narrow known normalization only.
+    // Never authorize from X-Forwarded-Host / Forwarded or treat aliases as one origin.
+    return requestUrl.hostname === "localhost" && ["127.0.0.1", "[::1]"].includes(hostUrl.hostname) &&
+      requestUrl.port === hostUrl.port;
+  } catch { return false; }
+}
+
 // Per-process bounds. No addresses or excerpt text retained. Not a distributed budget.
 export function createCallGate() {
   let active = 0; let minute = -1; let calls = 0;
@@ -28,8 +50,7 @@ export async function extractRequest(request: Request, options: {
   const env = options.env ?? process.env;
   if (env.IEP_AI_ENABLED !== "true") return error(503, "disabled", "AI extraction is switched off. Use Ethan’s original demo.");
   if (!env.DEEPSEEK_API_KEY?.trim()) return error(503, "unavailable", "AI extraction is not configured. Use Ethan’s original demo.");
-  const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) return error(403, "origin", "Open this demo directly to try extraction.");
+  if (!sameRequestOrigin(request)) return error(403, "origin", "Open this demo directly to try extraction.");
   if (!request.headers.get("content-type")?.startsWith("application/json")) return error(415, "format", "Send a synthetic text example as JSON.");
   // Enforce actual streamed bytes, not only the caller's Content-Length.
   let raw = ""; let bytes = 0; const reader = request.body?.getReader();

@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { NextRequest } from "next/server";
 vi.mock("server-only", () => ({}));
 import { createCallGate, extractRequest } from "./service";
 import { deepSeekProvider } from "./provider";
@@ -62,6 +63,33 @@ describe("guarded extraction endpoint", () => {
     expect((await extractRequest(request, { env })).status).toBe(403);
     const wrongType = req(); wrongType.headers.set("content-type", "text/plain");
     expect((await extractRequest(wrongType, { env })).status).toBe(415);
+  });
+  it.each(["127.0.0.1:3145", "[::1]:3145"])("accepts original loopback Host despite actual NextRequest URL normalization: %s", async host => {
+    const request = new NextRequest(`http://${host}/api/extract`, { method: "POST",
+      headers: { host, origin: `http://${host}`, "content-type": "application/json" },
+      body: JSON.stringify({ text: "synthetic text outside the allowlist", synthetic: true }) });
+    expect(new URL(request.url).hostname).toBe("localhost");
+    const model = provider(); const response = await extractRequest(request, { env, provider: model });
+    expect(response.status).toBe(422); expect((await response.json()).code).toBe("example_only");
+    expect(model.extract).not.toHaveBeenCalled();
+  });
+  it.each([
+    ["http://localhost:3145", "127.0.0.1:3145"],
+    ["http://127.0.0.1:3146", "127.0.0.1:3145"],
+    ["https://127.0.0.1:3145", "127.0.0.1:3145"],
+    ["http://attacker.test:3145", "127.0.0.1:3145"],
+    ["http://attacker.test:3145", "attacker.test:3145"],
+    ["http://127.0.0.1:3145", "127.0.0.1:3145/path"],
+    ["null", "127.0.0.1:3145"],
+    ["http://127.0.0.1:3145/path", "127.0.0.1:3145"],
+  ])("rejects cross-origin, mismatched authority and malformed Origin %s / Host %s", async (origin, host) => {
+    const request = new NextRequest("http://127.0.0.1:3145/api/extract", { method: "POST",
+      headers: { host, origin, "x-forwarded-host": new URL("http://attacker.test:3145").host,
+        forwarded: "host=attacker.test:3145;proto=https", "content-type": "application/json" },
+      body: JSON.stringify({ text: "synthetic text outside the allowlist", synthetic: true }) });
+    const model = provider(); const response = await extractRequest(request, { env, provider: model });
+    expect(response.status).toBe(403); expect((await response.json()).code).toBe("origin");
+    expect(model.extract).not.toHaveBeenCalled();
   });
   it("invalid quotes and provider errors never become an accepted candidate or expose raw errors", async () => {
     const invalid = { extract: vi.fn().mockResolvedValue({ ...candidate, sessionsPerPeriod: 3 }) };
