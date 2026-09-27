@@ -1,0 +1,19 @@
+.ai-plan-section label:not(.ai-check) { display: block; margin: 20px 0 8px; font-size: 13px; font-weight: 600; }
+.ai-plan-section textarea { width: 100%; max-width: 100%; resize: vertical; min-height: 150px; padding: 13px; border: 1px solid var(--line); border-radius: 3px; color: var(--ink); background: #fffaf0; font: 14px/1.6 Georgia, serif; }
+.ai-plan-section .button-row { flex-wrap: wrap; margin: 18px 0; }
+.ai-check { display: flex; align-items: flex-start; gap: 10px; margin: 18px 0; font-size: 12px; line-height: 1.6; cursor: pointer; }
+.ai-check input { width: 17px; height: 17px; flex: 0 0 17px; margin: 3px 0 0; accent-color: #315679; }
+.ai-empty h2 { font-size: 34px; margin-bottom: 20px; }
+.ai-empty p { line-height: 1.8; margin-bottom: 15px; }
+.ai-fields { margin-top: 12px; }
+.ai-fields > div { padding: 15px 0; border-bottom: 1px solid var(--line); }
+.ai-fields dt { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.ai-fields dd { margin: 0; overflow-wrap: anywhere; }
+.ai-fields blockquote { margin: 8px 0 0; padding: 8px 12px; border-left: 2px solid #bba871; background: #f1e6c755; font: 13px/1.7 Georgia, serif; }
+.ai-fields cite { display: block; margin-top: 4px; font: 10px/1.5 "Segoe UI", sans-serif; color: var(--muted); }
+.ai-human-label { color: #805523; margin-top: 7px; }
+.ai-explanation { margin: 20px 0 28px; padding: 17px; background: #e4e9ed99; border-left: 3px solid #718da6; font-size: 13px; line-height: 1.7; }
+.ai-explanation h2 { font: 20px Georgia, serif; margin-bottom: 8px; }
+.ai-explanation p + p { margin-top: 9px; }
+.ai-plan-section button:disabled { cursor: not-allowed; transform: none; opacity: .55; }
+.ai-review-context { padding: 15px 30px; background: #f3e7c4; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.6; }

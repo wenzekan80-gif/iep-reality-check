@@ -15,10 +15,12 @@ import { NotebookShell } from "./NotebookShell";
 import { usePageFlip } from "./usePageFlip";
 import { GuardianSprite } from "./GuardianSprite";
 import type { EvidenceChange } from "./EvidenceResolution";
+import { AIPlanStep } from "./AIPlanStep";
 
 export function DemoApp({ data }: { data: DemoData }) {
   const [screen, setScreen] = useState<Screen>("home");
-  const { navigate, flip, busy, cancel } = usePageFlip(screen, setScreen);
+  const { navigate: flipNavigate, flip, busy, cancel } = usePageFlip(screen, setScreen);
+  const [planMode, setPlanMode] = useState<"demo" | "ai">("demo");
   const [sourceIds, setSourceIds] = useState<string[] | null>(null);
   const [values, setValues] = useState({ sessions: data.initial.prescription.sessionsPerPeriod!, minutes: data.initial.prescription.minutesPerSession! });
   const [confirmedInput, setConfirmedInput] = useState<ReconciliationInput | null>(null);
@@ -27,6 +29,17 @@ export function DemoApp({ data }: { data: DemoData }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [evidenceChange, setEvidenceChange] = useState<EvidenceChange | null>(null);
   const [lumiCue, setLumiCue] = useState({ kind: "idle", sequence: 0 });
+  const invalidatePlan = () => { setConfirmedInput(null); setEvidenceChange(null); setSourceIds(null); };
+  const navigate = (next: Screen) => {
+    if (busy || next === screen) return;
+    if (next === "plan" || next === "home") invalidatePlan();
+    flipNavigate(next);
+  };
+  const startPlan = (mode: "demo" | "ai") => {
+    invalidatePlan(); setPlanMode(mode); setLateAdded(false); setMessage(""); setSelectedId(null);
+    setValues({ sessions: data.initial.prescription.sessionsPerPeriod!, minutes: data.initial.prescription.minutesPerSession! });
+    navigate("plan");
+  };
   const resetFocus = useRef(false);
   const openSource = (ids: string[]) => {
     setLumiCue(cue => ({ kind: "guide", sequence: cue.sequence + 1 }));
@@ -37,6 +50,7 @@ export function DemoApp({ data }: { data: DemoData }) {
     resetFocus.current = true;
     cancel(); setEvidenceChange(null); setLumiCue({ kind: "idle", sequence: 0 });
     setScreen("home"); setConfirmedInput(null); setLateAdded(false); setMessage(""); setSelectedId(null); setSourceIds(null);
+    setPlanMode("demo");
     setValues({ sessions: data.initial.prescription.sessionsPerPeriod!, minutes: data.initial.prescription.minutesPerSession! });
   };
   const addRecord = () => {
@@ -73,7 +87,10 @@ export function DemoApp({ data }: { data: DemoData }) {
       <div className="header-actions">{screen !== "home" && <button className="text-button" onClick={reset}>Restart demo</button>}<span className="demo-label"><span aria-hidden="true">◌</span> FICTIONAL DEMO</span></div></header>
     <main id="main" ref={main}>
       <NotebookShell screen={screen} confirmed={!!confirmedInput} flip={flip} busy={busy} onNavigate={navigate}>
-      {screen === "home" ? <HomePage data={data} onStart={() => navigate("plan")} /> : screen === "plan" ? <PlanStep data={data} values={values} onChange={newValues => { setValues(newValues); setConfirmedInput(null); setEvidenceChange(null); }} onConfirm={() => {
+      {planMode === "ai" && confirmedInput && screen !== "plan" && <p className="ai-review-context">Human-confirmed synthetic speech details, compared with Ethan’s existing fictional records. Dates and the six-week window are demo context, not AI extraction. <button className="text-button" onClick={() => openSource(["ai:excerpt", "ai:human-confirmation", data.initial.prescription.sourceBlockId, data.initial.window.sourceBlockId])}>View confirmed details and original excerpt ↗</button></p>}
+      {screen === "home" ? <HomePage data={data} onStart={() => startPlan("demo")} onAI={() => startPlan("ai")} /> : screen === "plan" && planMode === "ai" ? <AIPlanStep data={data} onInvalidate={invalidatePlan} onStable={() => startPlan("demo")} onConfirm={input => {
+        setConfirmedInput(lateAdded ? addLateEvidence(input, data) : input); setSelectedId(null); navigate("review");
+      }} /> : screen === "plan" ? <PlanStep data={data} values={values} onChange={newValues => { setValues(newValues); setConfirmedInput(null); setEvidenceChange(null); }} onConfirm={() => {
         const input = confirmDemoPlan(data, values.sessions, values.minutes);
         setConfirmedInput(lateAdded ? addLateEvidence(input, data) : input); setSelectedId(null); navigate("review");
       }} onSource={openSource} /> : confirmedInput && result && (screen === "review" ?

@@ -22,7 +22,7 @@ export function SourceDrawer({ ids, sources, onClose }: {
     <div className="drawer-content">
       <div className="drawer-heading"><div><p className="eyebrow">ORIGINAL WORDING</p><h2 id="source-title">Source text</h2></div>
         <button className="icon-button" onClick={onClose} aria-label="Close sources" autoFocus>×</button></div>
-      <p className="muted">Exact source text. No details have been added.</p>
+      <p className="muted">{blocks.some(block => block.id.startsWith("ai:") || block.id === "demo:parent-confirmation") ? "Original excerpts and human confirmation records are labelled separately. Human edits are not quotes from the IEP." : "Exact source text. No details have been added."}</p>
       {blocks.map(block => <article className="source-block" key={block.id}>
         <h3>{block.documentName}</h3>
         {(block.page != null || block.row != null) && <p className="source-location">
