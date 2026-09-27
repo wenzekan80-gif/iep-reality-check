@@ -64,6 +64,8 @@ node 'D:\IEP-Reality-Check-ai-release\evaluation\iep-extraction\validate.mjs' --
 
 The audit checks JSON parsing, 24 IDs, 18/6 split membership, exact and normalized duplicate inputs, all five field keys and types, positive integer/null numerics, unknown-field review flags, exact contiguous quotes, export fidelity, and exclusion of heldout IDs from the development export. It records SHA-256 hashes. This check cannot establish that labels are semantically correct or that a model extracts them.
 
+This folder's `.gitattributes` pins all text files to LF, including datasets, instructions, exports, and the audit summary, even when `core.autocrlf=true`. Export comparisons and SHA-256 checksums use the exact UTF-8 file content with LF line endings; no newline normalization is applied by the validator.
+
 For a future extraction evaluation, freeze the endpoint/model version, prompt, decoding settings, dataset hashes, and scoring rules before testing. Store predictions separately; never overwrite these expected labels with predictions. Tune using development cases only, then evaluate the heldout set once for that frozen candidate. The current status for every model metric below is **NOT RUN**.
 
 | Metric | Definition and manual review requirement |
