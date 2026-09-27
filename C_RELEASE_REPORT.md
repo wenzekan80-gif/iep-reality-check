@@ -1,5 +1,7 @@
 # C Release Report
 
+> Current work: an independent IEP extraction candidate is IN DEVELOPMENT from actual main `7f1d609`. Read C_AI_RELEASE_NOTES.md and the current FEATURE_TRUTH_TABLE.md section first. No AI commit has been delivered, accepted, merged or deployed yet. Earlier release and submission observations below remain historical evidence, not current AI completion claims.
+
 > Historical stable-release audit below. The later Notebook UI and copy were published on 2026-09-27 with user authorization: product `c5f7300`, production deployment `dpl_E7SXHAABKudWHarsT4Ur73MtQPLk`, live https://iep-reality-check.vercel.app . See `NOTEBOOK_UI_REVIEW.md` and the current section of `C_NEXT_SESSION_HANDOFF.md`. The original stable tag/deployment remain rollback references. Submission/media status was not advanced by this UI publication.
 
 Audit date: 2026-09-27 (Asia/Shanghai). Role: release facts, integration, deployment and final acceptance; no AI implementation.

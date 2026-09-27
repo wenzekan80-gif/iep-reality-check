@@ -1,5 +1,21 @@
 # Final Release Checklist
 
+## Current AI candidate gates
+
+- [x] Re-read actual main/Notebook HEAD, clean status, config and current publication handoff; base is 7f1d609.
+- [x] Create recoverable pre-ai-stable-7f1d609 tag and independent A/C worktrees.
+- [ ] Receive exact A delivery commit and inspect changes.
+- [ ] B accepts exact candidate: extraction/provenance/unknowns/errors/human gating and stable regression checks.
+- [ ] Genuine server model response verified with server-only credentials; no simulated-live claims.
+- [ ] Browser verifies excerpt → highlights → Confirm/Edit/Needs review → existing reconcile, plus stable Ethan main chain.
+- [ ] Public runtime/API protection and client/log secret checks pass.
+- [ ] Candidate promoted and anonymous production interaction verified; stable rollback retained.
+- [ ] Refresh public feature claims and any submission/video materials against the accepted version.
+
+The following checklist records the older synthetic release and submission work. Its completed items do not certify this new AI candidate.
+
+## Historical synthetic release checklist
+
 Date: 2026-09-27 (Asia/Shanghai).
 Code baseline: `dfeb36908973fd9c2c5cb0c290a0a685d8f9dfbc`.
 Release branch: `release/lexhack-stable-20260927`.

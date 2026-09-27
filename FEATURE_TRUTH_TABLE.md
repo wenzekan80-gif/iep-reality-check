@@ -1,5 +1,23 @@
 # Feature Truth Table
 
+## Current AI candidate — 2026-09-27
+
+Actual base: `7f1d6091bc45213d3815a39b8fe19e8bb3c6f402` (Notebook product `c5f7300`). Recovery tag: `pre-ai-stable-7f1d609`. See C_AI_RELEASE_NOTES.md. This section describes the newly authorized candidate; the older no-AI release audit below is historical.
+
+| Capability | Status | Evidence / scope |
+| --- | --- | --- |
+| Recoverable latest Notebook baseline | VERIFIED | Clean checkout and remote main both resolve to 7f1d609; git fsck succeeded; annotated recovery tag created. No new production smoke is implied. |
+| IEP clause candidate extraction | IN DEVELOPMENT | A implementing server-side structured extraction and exact-source checks in an independent worktree. No delivered commit or real provider result yet. |
+| Uncertainty recognition and Needs review | IN DEVELOPMENT | Null fields and explicit review gating required for ambiguous or incomplete clauses; not yet accepted by B. |
+| Highlighted source and Confirm / Edit integration | IN DEVELOPMENT | Must retain source provenance and require human action before unchanged reconcile(). |
+| Plain-language explanation | IN DEVELOPMENT | Based on the quoted IEP text; no legal interpretation. Awaiting implementation and acceptance. |
+| Public AI protections | IN DEVELOPMENT | Allowlisted synthetic examples, length bounds, server off switch and call protection are required before promotion. |
+| Genuine live AI validation | BLOCKED | No server provider credential confirmed; no actual model request verified. Mock tests cannot close this row. |
+| Service-record or email extraction | NOT IMPLEMENTED | Optional follow-up scope, outside the current candidate. |
+| AI candidate production release | BLOCKED | No delivered/accepted AI commit and no AI deployment yet; existing Notebook production is retained. |
+
+## Historical no-AI release audit
+
 Audit date: 2026-09-27 (Asia/Shanghai). Owner: C, release integration.
 
 Code baseline / B tested commit: `dfeb36908973fd9c2c5cb0c290a0a685d8f9dfbc`.
