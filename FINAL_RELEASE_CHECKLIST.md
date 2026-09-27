@@ -1,42 +1,46 @@
 # Final Release Checklist
 
-Updated 2026-09-28. Accepted candidate product `a059b6a42a29ee8570120f6aace2b617b9f339b7`; retained stable main `7f1d609`. An unchecked item means no adequate current evidence. This is not submission confirmation.
+Updated 2026-09-28. Accepted candidate product **b2bc2d982730676280bfc844f848ab8f4986d128**. Stable public main 7f1d609. This is not submission confirmation.
 
-## Candidate implementation gate
+## Minimal DeepSeek candidate
 
-- [x] Re-read actual Git state/base, README/package/Next config and Notebook handoff.
-- [x] Preserve and push pre-ai-stable-7f1d609 recovery tag.
-- [x] Separate A feature and C release worktrees; integrate only named A commits.
-- [x] Support the user's exact pathology / twice-weekly / 30-minute sentence.
-- [x] Preserve unknown fields and Needs review for vague input.
-- [x] Implement highlighted quotes, explicit Confirm/Edit/Needs review and separate human provenance.
-- [x] Require explicit fictional scope before existing reconcile; do not infer Ethan dates from pasted text.
-- [x] B independently accepts exact integrated commit: 122 tests, typecheck, build, diff and bounded sensitive-pattern checks.
-- [x] Pure engine, fixtures and dependency files unchanged.
-- [x] C actual local production-build browser: homepage, Ethan, plan/source/confirm, timeline, source drawer, meeting prep, late record and recalculation.
-- [x] Actual initial 10/300/1/1/2 → late 11/330/1/0/1; browser warning/error logs empty.
-- [x] Actual switch-off and enabled-but-no-key UI: honest unavailable states, no candidate, no forward navigation.
+- [x] Read actual Git/HEAD/branches/remotes, README, package and Next configuration.
+- [x] Preserve pre-ai-stable-7f1d609 recovery tag and public Notebook baseline.
+- [x] A develops in separate checkout; C integrates named commits; B tests exact integrated commit.
+- [x] Server POST /api/extract uses DeepSeek and DEEPSEEK_API_KEY only; exactly five success fields.
+- [x] Existing Zod, null unknowns and mandatory exact source substring; reject invalid results.
+- [x] Candidate only; Confirm/Edit/Needs review and explicit fictional scope precede unchanged reconcile.
+- [x] No domain/model/engine/fixture/style/dependency refactor.
+- [x] Public synthetic allowlist, length/body/output caps, timeout, off switch, per-process call gate.
+- [x] B bounded client/source/log and actual-key checks found zero leaks.
+- [x] B fresh npm test: 156/156; npm run typecheck PASS; npm run build PASS.
+- [x] C actual local production build: real DeepSeek clear response Speech / 2 / 30 and exact quote.
+- [x] C real vague response: null frequency/duration, needsReview=true and blocked comparison.
+- [x] C real browser: highlights → review pause → human edit/provenance → explicit scope/Confirm → timeline/source/meeting.
+- [x] C late record recomputes 10/300/1/1/2 → 11/330/1/0/1, with source and final question.
+- [x] Original Ethan fallback still performs the unchanged 300→330 flow, without another API call.
+- [x] Captured local browser warn/error logs empty.
+- [x] Prepare 24 synthetic references, fixed 18/6 split, import-ready export and local integrity validator.
+- [x] Mark Adaption and 24-row model evaluation NOT RUN; no runtime dependency or usage claim.
 
-## Gates intentionally deferred by the user's key decision
+## Gates not closed by local acceptance
 
-- [ ] Configure OPENAI_API_KEY only in server environment and explicitly enable IEP_AI_ENABLED.
-- [ ] Observe real clear-example provider output and exact quotes.
-- [ ] Observe real vague-example nulls / Needs review.
-- [ ] Actual browser: genuine model response → highlights/card → edit/review/confirm → engine.
-- [ ] Verify remote runtime/API behavior and protections on a candidate deployment.
-- [ ] Promote only accepted candidate; verify anonymous production full flow and retain rollback.
-- [ ] Refresh public feature claims/media after those gates pass.
+- [ ] Configure DeepSeek credentials and enable switch in deployment server environment when publishing AI.
+- [ ] Deploy this accepted candidate on a runtime-capable platform; AI production URL currently NOT CREATED.
+- [ ] Verify anonymous production AI clear/vague flow, Ethan fallback and entire primary browser chain.
+- [ ] Recheck deployed client/log credential boundaries and retain rollback before public feature freeze.
+- [ ] If claiming model quality, execute the fixed heldout/model evaluation and publish actual results.
+- [ ] If claiming Adaption use/optimization, actually run it and retain platform/result evidence first.
 
-Production remains the previously accepted Notebook release. No AI production URL exists. Local build success and mocked responses do not close these deferred items.
+Public production was not modified in this round. The existing local process credential enabled two real test calls; no key file or Vercel env change was made. A per-process limiter is not a hard global budget.
 
-## Public submission closeout
+## Submission closeout remains separate
 
-- [x] Real repository and stable live URLs exist; previous anonymous acceptance is preserved.
-- [ ] Recheck anonymous access for the final submitted release.
-- [ ] Create/update video to match the final UI/features, at most 3 minutes.
-- [ ] Upload video and verify anonymous playback without a judge login.
+- [x] Real repository and stable live URLs exist; inherited public acceptance preserved.
+- [ ] Recheck anonymous access against the final submitted release.
+- [ ] Produce current UI/AI video at most 3 minutes, upload and verify playback without judge login.
 - [ ] Confirm all real team members and complete technology/API/AI development-tool disclosures.
-- [ ] Confirm participant eligibility and original hack-period work with the user; Git metadata alone is insufficient.
-- [ ] Complete remaining Devpost steps and obtain actual Submitted / confirmation evidence.
+- [ ] Confirm eligibility/original hack-period work using actual contributor facts.
+- [ ] Finish Devpost and obtain actual Submitted / confirmation evidence.
 
-Last observed Devpost state is Draft / 3 of 4 / INCOMPLETE SUBMISSION. Public video is NOT CREATED. The earlier local 148-second recorded walkthrough is historical, does not show this AI candidate and is not evidence of upload or submission.
+Last observed Devpost: Draft / 3 of 4 / INCOMPLETE SUBMISSION, not revisited this round. Public video: NOT CREATED. The earlier 148-second local recording is historical and does not demonstrate this Notebook/AI candidate.

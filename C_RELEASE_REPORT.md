@@ -1,69 +1,81 @@
-# C Release Report
+# C Release Report — minimal DeepSeek extraction
 
-Date: 2026-09-28 (Asia/Shanghai). Scope: the new IEP extraction candidate on the published Notebook baseline. C coordinated A, merged explicit deliveries and performed browser acceptance; C did not implement product code.
+Updated 2026-09-28 (Asia/Shanghai). **Local candidate accepted; public production remains the stable Notebook demo.** C integrated named A commits and performed real-browser acceptance. B independently tested the exact product commit. No architecture, domain model, reconciliation, fixture or style refactor was made.
 
-## Release decision
+## Version facts and coordination
 
-**Candidate code accepted locally; real AI and AI production promotion remain BLOCKED.** The user explicitly chose to finish code first and configure a key later. Stable production remains the existing Notebook release. No AI deployment or main-branch update was performed in this round.
+- Starting candidate: `ff3c520b2642cc695a29ca28f00d7467703d0610`.
+- Accepted product: **`b2bc2d982730676280bfc844f848ab8f4986d128`**. Subsequent C changes are release documentation only.
+- A deliveries: `2cffc2b9e9bcf725c340833ee0fa8329e7c7899d` (DeepSeek/flat API), `d4788c5ea0240fe097a74e55402ee819886bc272` (Next loopback-origin compatibility).
+- Offline data commits: `9a8f498`, `4869e20`. Candidate branch: `release/iep-ai-candidate-20260927`, checkout `D:\IEP-Reality-Check-ai-release`.
+- Stable main: `7f1d6091bc45213d3815a39b8fe19e8bb3c6f402`; Notebook product `c5f73006acc10a3588a1051ef1d891e51575c186`. Pushed recovery tag `pre-ai-stable-7f1d609` retained.
+- A alone modified runtime code in its separate checkout. C merged only explicit deliveries; B tested named integrated commits. D prepared offline data separately. D/E claims must remain within VERIFIED truth-table rows.
 
-## Exact versions
+## Implemented and independently checked
 
-- Base and retained remote main: `7f1d6091bc45213d3815a39b8fe19e8bb3c6f402`.
-- Existing Notebook product: `c5f73006acc10a3588a1051ef1d891e51575c186`.
-- Recovery tag, created and pushed this round: `pre-ai-stable-7f1d609`.
-- A initial delivery: `2434f5b5e659b4d8bd8f29c2ade4ffa9c5cfee86`.
-- A exact-user-wording correction: `998d0d9808096c9e148715953f1773c096b5e79f`.
-- Final integrated product candidate, independently tested by B and browsed by C: `a059b6a42a29ee8570120f6aace2b617b9f339b7`.
-- Candidate branch: `release/iep-ai-candidate-20260927`, checkout `D:\IEP-Reality-Check-ai-release`. Later report-only commits do not change the accepted product.
+`POST /api/extract` calls DeepSeek server-side and returns exactly five fields: serviceName, sessionsPerPeriod, minutesPerSession, sourceQuote, needsReview. Existing Zod validates the flat contract and evidence; unknown values are null, and a nonempty verbatim contiguous source quote is mandatory. The old `/api/iep/extract` is a compatibility alias. Runtime has no OpenAI or Adaption dependency.
 
-## Delivered behavior and evidence
+The original candidate/review flow remains: escaped source highlighting, Confirm/Edit/Needs review, explicit fictional scope, separate human-edit provenance, then the unchanged `reconcile()`. Plain-language explanation is a deterministic reading aid based on validated fields, not another model/legal interpretation. Ethan's original synthetic flow remains independent of the API.
 
-A implemented a server-only OpenAI Responses adapter, strict structured output validation and exact quote/meaning checks. The clear synthetic example uses the user's sentence: Speech-language pathology services will be provided twice weekly for 30 minutes per session. It supports Speech-Language Therapy / 2 sessions per week / 30 minutes per session. Vague wording retains null values and Needs review. Safe highlighted source text, Confirm / Edit / Needs review and a plain-language reading aid are implemented. The explanation is deterministically composed from validated fields and labelled Based on the IEP text above; it is not free-form legal interpretation.
+B acceptance at the exact product commit: **npm test 156/156 across 10 files; npm run typecheck PASS; npm run build PASS**. Next builds dynamic Node API routes; no static-export setting. B confirmed domain/reconcile, fixtures, confirmation adapter, DemoApp, styles and dependency files unchanged from the starting candidate. See [B_DEEPSEEK_ACCEPTANCE.md](B_DEEPSEEK_ACCEPTANCE.md) and [A_DEEPSEEK_DELIVERY.md](A_DEEPSEEK_DELIVERY.md).
 
-Only explicit human confirmation and fictional-scope selection can pass the candidate into the existing reconcile function. Human edits remain distinct from the original AI values and quotes. Changed input, old async responses and returning to review invalidate prior confirmation. Ethan's dates, six-week window and records are disclosed as existing fictional context, not AI extraction.
+## C genuine DeepSeek and browser acceptance
 
-B independently passed 122/122 tests, typecheck, production build and bounded source/client-bundle/log scans at the exact integrated commit. Domain logic, fixtures and dependencies are unchanged. See B_AI_ACCEPTANCE.md and A_AI_DELIVERY.md. Mocked model/transport tests verify code behavior, not actual provider success.
+C ran the accepted production build at http://127.0.0.1:3143/ with the existing server-process DEEPSEEK_API_KEY, IEP_AI_ENABLED=true and DEEPSEEK_MODEL=deepseek-flash. No credential value was printed, copied into a source/env file, committed or put in a screenshot. Two approved fictional inputs were sent through the actual UI, server and DeepSeek. These are two observed successes, not an accuracy benchmark.
 
-C exercised the production build in a real Chrome browser:
+| Input | Actual /api/extract response |
+| --- | --- |
+| Clear pathology sentence | HTTP 200; Speech-Language Therapy; 2; 30; exact full sentence quote; needsReview=false |
+| speech services as appropriate | HTTP 200; Speech-Language Therapy; null; null; exact quote "speech services as appropriate"; needsReview=true |
 
-- Home → AI input, showing the exact requested sentence; unconfirmed Evidence/Meeting controls disabled.
-- Switch off: clear switched-off message, no candidate; one-click return to original Ethan demo.
-- Ethan plan/source → explicit confirmation → timeline → source drawer → meeting preparation.
-- Initial 10 documented / 300 minutes / 1 explained / 1 unresolved / 2 questions.
-- Add Sep18 record → 11 / 330 / 1 / 0 / 1, with actual added-record source and remaining make-up question.
-- Switch on but no key: clear unavailable message, zero candidate cards and locked forward controls.
-- Browser warning/error logs: empty for both observed sessions. Notebook input layout visually inspected. No fake provider or injected result used in browser acceptance.
+Actual Chrome checks on that build:
 
-Local receipts and screenshots: `outputs/ai-release/`. The retained preview is http://127.0.0.1:3143/ (production build, enabled switch, no key). The temporary disabled-mode server on 3142 was stopped. Actual successful-model highlighting/confirmation in a real browser remains untested because the key is deferred; automated UI tests cover that path. Native print and mobile visual acceptance were not rerun.
+- Home → AI excerpt → real response → highlighted original/candidate. Unconfirmed forward controls stayed locked.
+- Needs review paused comparison. Edit 30 → 45 retained original AI value/quote as 30 with a distinct human-edit label; editing back and explicit scope confirmation enabled the existing engine.
+- Confirmed AI provenance appeared in the source drawer separately from original fictional dates/window.
+- Timeline and meeting prep initially showed 10 documented / 300 minutes / 1 explained / 1 unresolved / 2 questions.
+- Add Sep 18 record → 11 / 330 / 1 / 0 / 1; original added-record source and remaining make-up question verified.
+- Vague real response showed two Unknown — needs review values, disabled Confirm/Edit and blocked forward navigation.
+- Use Ethan's original demo → original plan → Confirm → unchanged 10/300 to 11/330 late-record flow, without another API call.
+- Captured browser warning/error logs were empty.
 
-## Runtime and privacy boundary
+Local ignored receipts: `outputs/deepseek-release/c-live-clear.json`, `c-live-vague.json`, corresponding DOM/screenshots, `c-human-edit.txt`, `c-ai-source.txt`, `c-ai-after-late.txt`, `c-ai-final-meeting.txt`, fallback snapshots and `c-browser-logs.json`. B logs/scans are alongside them.
 
-No static export is configured. Build output includes dynamic `/api/iep/extract` on the Node.js runtime. Provider credentials are server-only; no NEXT_PUBLIC credential usage or matching sensitive patterns were found in B's bounded client/log scan. A scoped Vercel environment query found no production variables; no key value was read or captured.
+The initial integrated build had a real same-origin 403 because Next normalizes loopback request URLs. A supplied a narrow actual-Host/Origin fix with ten NextRequest regressions; B re-ran all gates and C passed the above real requests afterward. The earlier failure remains historical evidence. B's report predates C's successful live check; this section closes its separate pending gate.
 
-Public requests require one of two unchanged synthetic strings plus a synthetic-data confirmation. There are request/output size limits, timeout, no retries, an off switch, two concurrent requests and six calls per minute per process. The process-local limiter is not a global budget or authentication. OpenAI receives synthetic input with store:false; no zero-retention claim is made. Arbitrary real IEP intake, uploads/OCR, record/email extraction and legal assessment are outside this release.
+## Offline synthetic evaluation preparation
 
-## URLs and submission status
+[evaluation/iep-extraction/README.md](evaluation/iep-extraction/README.md) documents **24** manually authored fictional reference rows, fixed **18 development / 6 heldout** split, import-ready instruction/response JSONL, rubric and local validator. Integrity audit passed 24 unique examples, 24 exact source quotes, type checks and zero heldout leakage into the development export. Dataset SHA256: `e2136b3f589d8951989a77a0b46a435cebab4aa1a95b98b0a1d276126244cc79`.
 
-- Stable live: https://iep-reality-check.vercel.app . Existing Notebook deployment receipt: `dpl_E7SXHAABKudWHarsT4Ur73MtQPLk`, immutable https://iep-reality-check-natjiaqw6-kazz5.vercel.app . No fresh public smoke or redeployment is claimed in this AI round.
-- Repository: https://github.com/wenzekan80-gif/iep-reality-check . Candidate is kept on its separate release branch; stable main is retained.
-- AI production URL: NOT CREATED.
-- Devpost: https://devpost.com/software/iep-reality-check . Last observed saved state remains Draft / 3 of 4 / INCOMPLETE SUBMISSION; not revisited in this AI round.
-- Public video: NOT CREATED. The earlier 148-second local video shows the older synthetic UI, so it does not demonstrate Notebook or this AI candidate.
-- Complete real-team roster, full contributor disclosure, eligibility confirmation and final Submitted confirmation remain outstanding. Do not infer them from Git authors or account login.
+**Adaption Labs use/optimization/platform evaluation: NOT RUN. Full 24-row model evaluation: NOT RUN.** The 8 clear weekly speech / 14 review / 2 other-service challenge rows are reference targets, not proof the endpoint supports every row. No runtime imports or response fallback use this data.
+
+## Security and scope limits
+
+Server-only DEEPSEEK_API_KEY; optional DEEPSEEK_MODEL defaults to deepseek-flash. IEP_AI_ENABLED is an explicit off switch. Public mode accepts only two exact synthetic examples and requires synthetic=true. Caps: 2,400 characters / 12,000 request bytes / 1,000 output tokens / 32 KiB provider output / 15 seconds, no retries. Two concurrent and six-per-minute protection is per process, not a distributed or hard global spending limit. Optional custom synthetic mode is development-loopback only.
+
+B's bounded source, generated-client and log inspections found zero sensitive-pattern or actual-key matches; no raw provider logging/storage was added. These are bounded checks, not a universal security certification.
+
+The verifier remains intentionally narrow: weekly speech wording and minutes per session. Unsupported other services or null-service numeric wording may be rejected rather than returned partially; monthly/range ambiguities cannot enter Ethan's comparison. Arbitrary real-student intake, multi-service extraction, record/email extraction, PDF/OCR and legal conclusions are not implemented/claimed. Mobile and native-print acceptance were not repeated this round.
+
+## Deployment, freeze and submission
+
+This round made no Vercel environment or production change. Stable deployment remains `dpl_E7SXHAABKudWHarsT4Ur73MtQPLk`, https://iep-reality-check.vercel.app and immutable https://iep-reality-check-natjiaqw6-kazz5.vercel.app . Its earlier browser acceptance is inherited, not freshly rerun here. AI production URL: **NOT CREATED**. The local production-build smoke is not remote production smoke. Freeze this accepted candidate scope; public AI release still requires runtime/env configuration and anonymous production browser acceptance.
+
+Public repo: https://github.com/wenzekan80-gif/iep-reality-check . Devpost project: https://devpost.com/software/iep-reality-check ; last observed Draft / 3 of 4 / INCOMPLETE SUBMISSION, not revisited in this AI round. Public video: **NOT CREATED**. The historical local 148-second video does not demonstrate Notebook/AI. Real team, complete tool/API disclosures, updated video and actual Submitted confirmation remain pending.
 
 ## Handoff
 
-TASK: IEP clause extraction, uncertainty and reading-aid candidate
-STATUS: Local code gate PASS; genuine provider and AI production BLOCKED by deferred key
-BASE COMMIT: 7f1d6091bc45213d3815a39b8fe19e8bb3c6f402
-FINAL RELEASE COMMIT: Stable 7f1d609; accepted candidate a059b6a42a29ee8570120f6aace2b617b9f339b7, not promoted
-LIVE URL: https://iep-reality-check.vercel.app (stable Notebook, no live AI)
+```text
+TASK: Add minimal DeepSeek extraction and offline synthetic evaluation data
+STATUS: Local candidate VERIFIED; AI public release not created
+BASE COMMIT: ff3c520b2642cc695a29ca28f00d7467703d0610
+FINAL RELEASE COMMIT: Accepted candidate product b2bc2d982730676280bfc844f848ab8f4986d128; stable public 7f1d609; later C changes documentation only
+LIVE URL: https://iep-reality-check.vercel.app (stable); http://127.0.0.1:3143/ (local candidate)
 REPO URL: https://github.com/wenzekan80-gif/iep-reality-check
 VIDEO URL: NOT CREATED
-ACTUALLY VERIFIED: B 122 tests/typecheck/build/bounded scans; C actual local stable flow and off/keyless AI behavior
-NOT VERIFIED: Actual model responses; successful live AI browser chain; AI production; updated public video; final submission
-KNOWN ISSUES: No configured key; public extraction intentionally limited to two exact synthetic examples; limiter per process
-SUBMISSION STATUS: Last observed Draft / INCOMPLETE SUBMISSION
-NEXT ACTION: Configure server key when ready, verify genuine clear/vague responses and browser chain, then consider production promotion and updated submission media
-
-Historical stable/submission reports remain in Git history, including baseline report at 7f1d609. This report replaces their current-status summary without claiming their past checks were rerun.
+ACTUALLY VERIFIED: B 156 tests/typecheck/build/scans; C two genuine DeepSeek responses and confirm/edit/review/engine/late-record/fallback browser flow; offline 24-row integrity
+NOT VERIFIED: AI remote production; 24-row model accuracy; Adaption use/optimization; new public video; final submission
+KNOWN ISSUES: Two-example public allowlist; narrow speech verifier; limiter per process; broader data rows are challenge references
+SUBMISSION STATUS: Last observed Draft / INCOMPLETE SUBMISSION; not rechecked this round
+NEXT ACTION: When publishing this candidate, configure server env and run anonymous production smoke; independently run heldout/model/Adaption evaluation before making related claims
+```

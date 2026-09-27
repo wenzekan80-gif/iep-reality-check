@@ -1,46 +1,47 @@
 # Feature Truth Table
 
-Current audit: 2026-09-28. Base/stable main: `7f1d609`. Accepted candidate product: `a059b6a42a29ee8570120f6aace2b617b9f339b7`. See C_RELEASE_REPORT.md and B_AI_ACCEPTANCE.md.
-
-Only VERIFIED, IN DEVELOPMENT, BLOCKED, NOT IMPLEMENTED and NOT CLAIMED are permitted. VERIFIED applies only to the evidence scope in that row. D/E may cite VERIFIED rows only with their limits; mocked transport, local acceptance and existing public production are distinct.
+Updated 2026-09-28. Starting candidate ff3c520; accepted product **b2bc2d982730676280bfc844f848ab8f4986d128**; stable public main 7f1d609. See C_RELEASE_REPORT.md and B_DEEPSEEK_ACCEPTANCE.md. VERIFIED applies only to each row's evidence scope. D/E may cite only VERIFIED capabilities with these limits.
 
 | Capability | Status | Evidence / permitted claim |
 | --- | --- | --- |
-| Recoverable latest Notebook baseline | VERIFIED | Actual base/main 7f1d609; git object check; pushed annotated tag pre-ai-stable-7f1d609. |
-| Isolated A delivery and C integration | VERIFIED | Explicit A commits 2434f5b + 998d0d9 integrated as a059b6a; no concurrent C product edits. |
-| Server extraction implementation | VERIFIED | Source review and mocked provider tests; strict schema, quotes and meaning validation. Actual model success is a separate BLOCKED row. |
-| User's exact pathology / twice-weekly / 30-minute example | VERIFIED | Supported synthetic allowlist string and B-tested validation yielding canonical speech / 2 / 30; not a real model quality measurement. |
-| Unknowns and Needs review code path | VERIFIED | Tests retain null frequency/duration for vague wording and block comparison; fabricated values/quotes rejected. |
-| Source highlights and Confirm / Edit / Needs review | VERIFIED | Automated UI integration tests: safe text highlighting, human gate, edits with separate provenance, stale invalidation, unchanged reconcile. Successful-provider real-browser path not yet tested. |
-| Plain-language reading aid | VERIFIED | Deterministic explanation from validated fields; Based on the IEP text above label and uncertainty wording. No legal interpretation. |
-| Unchanged reconciliation and fixture logic | VERIFIED | B compared domain, fixtures and dependency files with base; no changes. |
-| Local stable Ethan full browser workflow | VERIFIED | C actual Chrome production-build home/plan/confirm/timeline/source/meeting/late-record/recompute; 10/300/1/1/2 → 11/330/1/0/1. |
-| AI disabled / missing-key behavior | VERIFIED | C actual browser: clear off/unavailable messages, no candidate, locked forward controls, original demo accessible. |
-| Automated candidate checks | VERIFIED | B fresh 122/122 tests across 10 files, typecheck and production build at a059b6a. |
-| Runtime API configuration in local build | VERIFIED | No static export; Node runtime dynamic /api/iep/extract. Remote runtime execution not tested for this candidate. |
-| Public endpoint safeguards in code | VERIFIED | Exact synthetic allowlist, body/output caps, timeout, off switch, process-local 2-concurrent/6-per-minute gate tested. Not authentication or global budget. |
-| Server-only credentials / bounded scan | VERIFIED | B found no sensitive-pattern matches in inspected client source, production JS or B logs; no new AI console/storage/raw-HTML use. Bounded check only. |
-| Genuine provider extraction success | BLOCKED | User chose code first/key later. No genuine model call observed. |
-| Genuine AI excerpt → confirm → engine in browser | BLOCKED | Automated mocked-transport path passes; real-provider browser acceptance waits for key. |
-| AI production deployment and anonymous smoke | BLOCKED | AI URL NOT CREATED. Stable production not replaced. |
-| Existing public Notebook release | VERIFIED | Inherited publication acceptance at product c5f7300 / record7f1d609 and dpl_E7SXHAABKudWHarsT4Ur73MtQPLk. Not freshly production-tested in this AI round. |
-| Public GitHub project | VERIFIED | Existing real repo and remote main verified; candidate kept separate from stable main. |
-| Arbitrary real-student intake / PDF / OCR / authentication | NOT IMPLEMENTED | Public scope is two exact synthetic examples. No upload or student-data intake feature. |
-| Service-record or school-email extraction | NOT IMPLEMENTED | Deferred optional follow-up, not this candidate. |
-| Real-family study, measured accuracy/time savings, FERPA certification | NOT CLAIMED | No supporting evidence. |
-| Legal violation / owed-minutes determination | NOT CLAIMED | Product prepares evidence-grounded questions, not legal conclusions. |
-| Updated public video under 3 minutes | BLOCKED | VIDEO URL NOT CREATED. Earlier 148-second local recording is historical and does not show current Notebook/AI. |
-| Complete team / disclosure / eligibility | BLOCKED | Real roster and complete contributor information pending; saved historical draft is not proof. |
-| Final competition submission | BLOCKED | Last observed Devpost Draft / 3 of 4 / INCOMPLETE SUBMISSION; not rechecked in this round. |
+| Recoverable Notebook baseline | VERIFIED | Stable main 7f1d609; pushed pre-ai-stable-7f1d609 tag. |
+| Isolated A delivery and C integration | VERIFIED | Named A commits 2cffc2b/d4788c5; C product b2bc2d9; independent B gate. |
+| DeepSeek POST /api/extract, five-field contract | VERIFIED | Strict existing-Zod validation and real local clear/vague calls; /api/iep/extract same-handler compatibility alias. |
+| Clear weekly speech extraction | VERIFIED | Actual local DeepSeek response Speech-Language Therapy / 2 / 30 / exact original full sentence / needsReview=false. |
+| Uncertainty recognition | VERIFIED | Actual local vague response Speech / null / null / exact quote / needsReview=true; numerical guesses rejected in tests. |
+| Exact source highlighting and human gate | VERIFIED | C real-browser source mark, Needs review pause, Edit provenance, scope/Confirm required before unchanged reconcile. |
+| Parent-facing explanation | VERIFIED | Deterministic reading aid from validated fields, Based on the IEP text above; no legal interpretation. |
+| AI excerpt → confirm → engine → late record | VERIFIED | Local production build only: 10/300/1/1/2 → 11/330/1/0/1; source and final meeting question checked. |
+| Original Ethan fallback | VERIFIED | C actual original plan/confirm and 300→330 late-record flow after AI review; no extra API calls. |
+| Pure reconciliation/domain/fixtures preserved | VERIFIED | B diff against ff3c520; no engine, model, fixture, confirmation-adapter or dependency changes. |
+| Automated candidate gate | VERIFIED | B fresh 156/156 tests, typecheck/build at b2bc2d9. |
+| Runtime-capable build | VERIFIED | No static export; dynamic Node /api/extract and alias. Remote candidate runtime remains untested. |
+| Public safeguards in code | VERIFIED | Two exact examples; synthetic flag; length/body/output/time caps; off switch; 2 concurrent/6 per minute per process. Not a global budget or authentication. |
+| Server-only key and bounded leak checks | VERIFIED | DEEPSEEK_API_KEY only; B source/client/log pattern and exact-key checks had zero matches. Values absent from committed configuration. |
+| Real model availability | VERIFIED | Two local genuine DeepSeek requests, configured model deepseek-flash; no broader accuracy or uptime claim. |
+| 24 synthetic reference examples and fixed split | VERIFIED | 18 development/6 heldout, exact-quote/type/export integrity passed; offline data only. |
+| Adaption-ready offline export | VERIFIED | Prepared instruction/response JSONL and documented workflow; no upload/platform run claimed. |
+| Adaption Labs actually used or optimized results | NOT CLAIMED | NOT RUN; no runtime dependency, account operation or platform evidence. |
+| Full 24-row model accuracy or educator adjudication | NOT CLAIMED | Reference/challenge targets only; not evaluated on a model or adjudicated by educators. |
+| AI public deployment and anonymous remote smoke | BLOCKED | AI production URL NOT CREATED; stable production retained; server-env/deploy/smoke remain. |
+| Existing public Notebook release | VERIFIED | Inherited product c5f7300 / record7f1d609 publication at dpl_E7SXHAABKudWHarsT4Ur73MtQPLk; not rerun this round. |
+| Existing public GitHub repo | VERIFIED | Real repository/remote; candidate separate from stable main. |
+| Arbitrary real-student intake, PDF/OCR/authentication | NOT IMPLEMENTED | Public mode intentionally two exact synthetic excerpts. |
+| General other-service/multi-service IEP parser | NOT IMPLEMENTED | Narrow weekly speech verifier; may reject broader references instead of partial candidates. |
+| Service-record or school-email extraction | NOT IMPLEMENTED | Outside this minimal extraction change. |
+| Legal violation, owed minutes, FERPA certification, measured time savings | NOT CLAIMED | No supporting evidence or such product determination. |
+| Updated public video under 3 minutes | BLOCKED | URL NOT CREATED; historical 148-second local video shows older product. |
+| Complete real team and disclosures | BLOCKED | Contributor/eligibility facts pending; agents are not asserted as human team members. |
+| Final Devpost submission | BLOCKED | Last observed Draft / INCOMPLETE SUBMISSION; no current Submitted confirmation. |
 
 ## URL register
 
 | Deliverable | Actual URL / state |
 | --- | --- |
-| GitHub | https://github.com/wenzekan80-gif/iep-reality-check |
-| Stable live | https://iep-reality-check.vercel.app |
-| Stable Notebook immutable deployment | https://iep-reality-check-natjiaqw6-kazz5.vercel.app |
-| Local candidate preview | http://127.0.0.1:3143/ (not a public deliverable) |
+| Repository | https://github.com/wenzekan80-gif/iep-reality-check |
+| Stable production | https://iep-reality-check.vercel.app |
+| Stable immutable deployment | https://iep-reality-check-natjiaqw6-kazz5.vercel.app |
+| Local AI preview | http://127.0.0.1:3143/ (not public) |
 | AI production | NOT CREATED |
-| Devpost project | https://devpost.com/software/iep-reality-check (last observed incomplete draft) |
+| Devpost | https://devpost.com/software/iep-reality-check (last observed incomplete draft) |
 | Public video | NOT CREATED |
