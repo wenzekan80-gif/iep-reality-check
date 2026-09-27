@@ -37,7 +37,7 @@ Inherited bounds: 2,400 input characters / 12,000 request bytes; 1,000 output to
 
 ## Validation
 
-- `npm test`: **PASS, 146/146 across 10 files** (previous 122 plus 24 provider/contract/field-evidence regressions).
+- `npm test`: **PASS, 156/156 across 10 files** (previous 122 plus 24 provider/contract/field-evidence regressions and 10 origin regressions).
 - `npm run typecheck`: **PASS**.
 - `npm run build`: **PASS**, routes `/`, `/_not-found`, `/api/extract`, `/api/iep/extract`.
 - `git diff --check`: **PASS**.
@@ -45,6 +45,14 @@ Inherited bounds: 2,400 input characters / 12,000 request bytes; 1,000 output to
 - Tests cover DeepSeek fixed endpoint/auth/model/options, absence of Responses-only options, rejection of another provider key, both route contracts, unknowns and required quotes, malformed/refused/incomplete output, no-key/off/provider errors and bounds, per-field monthly/range uncertainty, quoted UI, human confirmation/edit/review/stale state, and unchanged Ethan 10/300 → 11/330 behavior.
 
 Logs (local, git-ignored): `outputs/deepseek-delivery/tests.log`, `typecheck.log`, `build.log`.
+
+### Same-origin follow-up
+
+Installed Next.js 16.3.5 `NextURL` normalizes `127.0.0.1` and `[::1]` to `localhost`; `NextRequest.url` exposes that normalized value while the incoming Host remains unchanged. The original URL-only guard therefore rejected legitimate browser requests to `127.0.0.1`. The narrow fix validates Origin against the actual Host and permits only this known loopback normalization with matching scheme and port. It does not trust Forwarded/X-Forwarded-Host, and it does not treat localhost/127.0.0.1 as the same browser origin. Other URL/Host mismatches remain rejected.
+
+Actual production-build HTTP verification used a bounded local Next server on port 3145, an explicit fake credential and input outside the allowlist, with external provider attempts blocked and counted. Before the fix, exact same-origin returned 403. After the fix, it reached the allowlist guard and returned 422 `example_only`; a cross-origin localhost alias, external origin and forged forwarded-host each returned 403. A no-Origin control retained the existing 422 behavior. Provider attempts: **0**. This was a local HTTP guard check, not live AI acceptance. Additional tests instantiate the actual installed `NextRequest`, reproduce its normalization, and check mismatched ports/schemes/hosts, invalid origins and forwarding-header spoofing.
+
+Follow-up receipts/logs (local, git-ignored): `origin-before.json`, `origin-after.json`, `origin-http-smoke.cjs`, `tests-origin-fix.log`, `typecheck-origin-fix.log`, `build-origin-fix.log` under `outputs/deepseek-delivery/`. The test server closed after each bounded run.
 
 **A live-provider verification: NOT PERFORMED.** Transport/provider tests are mocked with explicit test-only credentials. They prove code behavior, not live model availability or accuracy. C owns any bounded live clear/vague acceptance after exact-commit checks. Offline evaluation data was not imported, executed, edited or used as runtime output by A.
 
