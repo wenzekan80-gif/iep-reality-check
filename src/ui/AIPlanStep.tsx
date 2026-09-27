@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import { MAX_EXCERPT_LENGTH, SYNTHETIC_EXAMPLES } from "../ai/examples";
-import { canCompareWithEthan, EvidenceError, explainCandidate, validateCandidate, type Candidate } from "../ai/extraction";
+import { canCompareWithEthan, EvidenceError, explainCandidate, extractionToCandidate, type Candidate } from "../ai/extraction";
 import { confirmExtractedPlan, HumanDetailsSchema, type HumanDetails } from "../ai/confirmation";
 import type { ReconciliationInput } from "../domain/types";
 import type { DemoData } from "./demo-data";
@@ -31,6 +31,7 @@ export function AIPlanStep({ data, onInvalidate, onConfirm, onStable }: {
   const [text, setText] = useState<string>(SYNTHETIC_EXAMPLES[0].text);
   const [synthetic, setSynthetic] = useState(false);
   const [candidate, setCandidate] = useState<Candidate | null>(null);
+  const [sourceQuote, setSourceQuote] = useState<string | null>(null);
   const [details, setDetails] = useState<HumanDetails | null>(null);
   const [editing, setEditing] = useState(false);
   const [sessions, setSessions] = useState(""); const [minutes, setMinutes] = useState("");
@@ -40,7 +41,7 @@ export function AIPlanStep({ data, onInvalidate, onConfirm, onStable }: {
   useEffect(() => () => { generation.current++; request.current?.abort(); }, []);
   const invalidate = () => {
     generation.current++; request.current?.abort(); setPending(false);
-    setCandidate(null); setDetails(null); setEditing(false); setScope(false); setReview(false); setMessage(""); onInvalidate();
+    setCandidate(null); setSourceQuote(null); setDetails(null); setEditing(false); setScope(false); setReview(false); setMessage(""); onInvalidate();
   };
   const changeText = (next: string) => { invalidate(); setText(next); };
   const extract = async () => {
@@ -49,7 +50,7 @@ export function AIPlanStep({ data, onInvalidate, onConfirm, onStable }: {
     setPending(true);
     let failureMessage = "AI extraction is unavailable. Try again later or use Ethan’s original demo.";
     try {
-      const response = await fetch("/api/iep/extract", { method: "POST", signal: controller.signal,
+      const response = await fetch("/api/extract", { method: "POST", signal: controller.signal,
         headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text, synthetic }) });
       const body = await response.json();
       if (id !== generation.current) return;
@@ -65,9 +66,8 @@ export function AIPlanStep({ data, onInvalidate, onConfirm, onStable }: {
         failureMessage = messages[body.code] ?? "The excerpt could not be accepted. Use a short synthetic example.";
         throw new Error("Request rejected");
       }
-      if (body.origin !== "live-model") throw new Error("Missing model response marker");
-      const next = validateCandidate(body.candidate, text);
-      setCandidate(next);
+      const next = extractionToCandidate(body, text);
+      setCandidate(next); setSourceQuote(body.sourceQuote);
       if (canCompareWithEthan(next, text)) setDetails({ service: "Speech-Language Therapy", sessions: next.weeklyFrequency.value!, minutes: next.minutesPerSession.value! });
     } catch (error) {
       if (id === generation.current && !controller.signal.aborted) setMessage(error instanceof EvidenceError ? error.message : failureMessage);
@@ -93,7 +93,7 @@ export function AIPlanStep({ data, onInvalidate, onConfirm, onStable }: {
         {pending && <p className="notice" role="status">Waiting for the model. No plan is confirmed.</p>}
         {message && <p className="notice" role="alert">{message}</p>}
         {candidate && <div className="plan-source-paper"><p className="plan-source-name">Original submitted text · exact quotes highlighted</p>
-          <pre className="source-excerpt-text" data-testid="ai-original"><QuotedSource text={text} quotes={[candidate.service.quote, candidate.weeklyFrequency.quote, candidate.minutesPerSession.quote].filter((q): q is string => q !== null)} /></pre></div>}
+          <pre className="source-excerpt-text" data-testid="ai-original"><QuotedSource text={text} quotes={[sourceQuote, candidate.service.quote, candidate.weeklyFrequency.quote, candidate.minutesPerSession.quote].filter((q): q is string => q !== null)} /></pre></div>}
       </article>
       <div className="notebook-page notebook-right plan-confirm-page">
         <p className="notebook-running-head">CANDIDATE DETAILS <span aria-hidden="true">02</span></p>

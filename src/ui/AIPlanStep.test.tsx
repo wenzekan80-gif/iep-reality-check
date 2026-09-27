@@ -8,8 +8,9 @@ import { SYNTHETIC_EXAMPLES } from "../ai/examples";
 import { DemoApp } from "./DemoApp";
 import { QuotedSource } from "./AIPlanStep";
 
-const candidate = { service: { value: "Speech-Language Therapy", quote: "Speech-language pathology services" }, weeklyFrequency: { value: 2, quote: "twice weekly" }, minutesPerSession: { value: 30, quote: "30 minutes per session" }, needsReview: false };
-const success = () => Response.json({ candidate, origin: "live-model", exampleId: "ethan-clear" });
+const candidate = { serviceName: "Speech-Language Therapy", sessionsPerPeriod: 2, minutesPerSession: 30,
+  sourceQuote: "Speech-language pathology services will be provided twice weekly for 30 minutes per session.", needsReview: false };
+const success = () => Response.json(candidate);
 beforeAll(() => {
   HTMLDialogElement.prototype.showModal = function () { this.setAttribute("open", ""); };
   HTMLDialogElement.prototype.close = function () { this.removeAttribute("open"); };
@@ -40,8 +41,10 @@ describe("AI candidate review (mocked transport; not a live-provider test)", () 
     expect(screen.getByRole("button", { name: "Extract with AI" })).toBeDisabled(); expectNavigationBlocked();
     await extract(user);
     expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(fetcher.mock.calls[0][0]).toBe("/api/extract");
     expect(screen.getByTestId("ai-original").textContent).toBe(SYNTHETIC_EXAMPLES[0].text);
-    expect(screen.getByTestId("ai-original").querySelectorAll("mark")).toHaveLength(3);
+    expect(screen.getByTestId("ai-original").querySelectorAll("mark")).toHaveLength(1);
+    expect(screen.getByTestId("ai-original").querySelector("mark")?.textContent).toBe(candidate.sourceQuote);
     expect(screen.getByText("Based on the IEP text above.")).toBeInTheDocument();
     expect(confirm()).toBeDisabled(); expectNavigationBlocked();
     await user.click(scope()); expect(confirm()).toBeEnabled(); expectNavigationBlocked();
@@ -87,15 +90,15 @@ describe("AI candidate review (mocked transport; not a live-provider test)", () 
     expect(screen.queryByRole("button", { name: "Confirm" })).not.toBeInTheDocument(); expectNavigationBlocked();
   });
   it("vague details remain null, labelled for review and cannot borrow Ethan numbers", async () => {
-    const vague = { ...candidate, service: { value: "Speech-Language Therapy", quote: "speech services" }, weeklyFrequency: { value: null, quote: null }, minutesPerSession: { value: null, quote: null }, needsReview: true };
-    const { user } = await openAI(vi.fn().mockResolvedValue(Response.json({ candidate: vague, origin: "live-model" })));
+    const vague = { ...candidate, sessionsPerPeriod: null, minutesPerSession: null, sourceQuote: "speech services as appropriate", needsReview: true };
+    const { user } = await openAI(vi.fn().mockResolvedValue(Response.json(vague)));
     await user.click(screen.getByRole("button", { name: "Vague example" })); await extract(user);
     expect(screen.getAllByText("Unknown — needs review")).toHaveLength(2);
     expect(confirm()).toBeDisabled(); expect(screen.getByRole("button", { name: "Edit" })).toBeDisabled(); expectNavigationBlocked();
     expect(screen.queryByTestId("documented-count")).not.toBeInTheDocument();
   });
   it("rejects fabricated provider quote output in the client too", async () => {
-    const { user } = await openAI(vi.fn().mockResolvedValue(Response.json({ candidate: { ...candidate, weeklyFrequency: { value: 2, quote: "made-up quote" } }, origin: "live-model" })));
+    const { user } = await openAI(vi.fn().mockResolvedValue(Response.json({ ...candidate, sourceQuote: "made-up quote" })));
     await extract(user); expect(screen.getByRole("alert")).toHaveTextContent("could not be verified");
     expect(screen.queryByTestId("ai-original")).not.toBeInTheDocument(); expectNavigationBlocked();
   });

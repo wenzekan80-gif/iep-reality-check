@@ -10,7 +10,14 @@ export const CandidateSchema = z.object({
   needsReview: z.boolean(),
 }).strict();
 export type Candidate = z.infer<typeof CandidateSchema>;
-export const candidateJsonSchema = z.toJSONSchema(CandidateSchema);
+export const ExtractionSchema = z.object({
+  serviceName: z.string().min(1).max(100).nullable(),
+  sessionsPerPeriod: z.number().int().positive().max(100).nullable(),
+  minutesPerSession: z.number().int().positive().max(1440).nullable(),
+  sourceQuote: z.string().min(1).max(2400).refine(value => value.trim().length > 0),
+  needsReview: z.boolean(),
+}).strict();
+export type Extraction = z.infer<typeof ExtractionSchema>;
 
 export class EvidenceError extends Error {
   constructor() { super("The extracted fields could not be verified against the excerpt. Review the wording and try again."); }
@@ -26,8 +33,7 @@ const duration = /\b(\d+) minutes? (?:per|each|a) session\b/gi;
 // A deliberately narrow evidence verifier, not a fallback extractor. Only the model
 // proposes fields. Unsupported wording is left for review instead of being guessed.
 function hasUnsafeContext(text: string) {
-  return /\b(?:appropriate|needed|optional|approximately|about|up to|at least|at most|monthly|month|alternate|alternating|unless|except|not|no longer|may|might|could|if|or)\b/i.test(text) ||
-    /\b\d+\s*(?:[-–—/]|to)\s*\d+\b/.test(text) ||
+  return /\b(?:appropriate|needed|optional|approximately|about|up to|at least|at most|alternate|alternating|unless|except|not|no longer|may|might|could|if|or)\b/i.test(text) ||
     /\b(?:ignore|instructions?|system|assistant|prompt|output|return|json|pretend)\b/i.test(text) ||
     otherService.test(text) || /[<>]/.test(text);
 }
@@ -47,10 +53,17 @@ export function validateCandidate(raw: unknown, text: string): Candidate {
   }
   const weeklyMatches = [...text.matchAll(frequency)];
   const durationMatches = [...text.matchAll(duration)];
-  const unsafe = hasUnsafeContext(text) || weeklyMatches.length > 1 || durationMatches.length > 1;
-  for (const [f, pattern, matches] of [
-    [candidate.weeklyFrequency, frequency, weeklyMatches],
-    [candidate.minutesPerSession, duration, durationMatches],
+  const rangeUnits = [...text.matchAll(/\b\d+\s*(?:[-–—/]|to)\s*\d+\b/g)]
+    .map(match => text.slice(match.index! + match[0].length));
+  const unknownRange = rangeUnits.some(tail => !/^\s+(?:sessions?|times?|minutes?)\b/i.test(tail));
+  const unsafeContext = hasUnsafeContext(text) || unknownRange;
+  const unsafeFrequency = unsafeContext || /\b(?:month|monthly)\b/i.test(text) || weeklyMatches.length > 1 ||
+    rangeUnits.some(tail => /^\s+(?:sessions?|times?)\b/i.test(tail));
+  const unsafeDuration = unsafeContext || durationMatches.length > 1 ||
+    rangeUnits.some(tail => /^\s+minutes?\b/i.test(tail));
+  for (const [f, pattern, matches, unsafe] of [
+    [candidate.weeklyFrequency, frequency, weeklyMatches, unsafeFrequency],
+    [candidate.minutesPerSession, duration, durationMatches, unsafeDuration],
   ] as const) {
     if (f.value === null) continue;
     const evidence = [...f.quote!.matchAll(pattern)];
@@ -58,9 +71,31 @@ export function validateCandidate(raw: unknown, text: string): Candidate {
       numberValue(evidence[0][1] ?? evidence[0][2]) !== f.value ||
       evidence[0][0] !== matches[0][0]) throw new EvidenceError();
   }
-  return { ...candidate, needsReview: candidate.needsReview || unsafe ||
+  return { ...candidate, needsReview: candidate.needsReview || unsafeFrequency || unsafeDuration ||
     candidate.service.value !== "Speech-Language Therapy" ||
     candidate.weeklyFrequency.value === null || candidate.minutesPerSession.value === null };
+}
+
+// The public API has one quote. Reuse that exact quote as evidence for each known
+// field; the existing verifier still checks each field's meaning independently.
+function candidateFromExtraction(value: Extraction): Candidate {
+  return {
+    service: { value: value.serviceName, quote: value.serviceName === null ? null : value.sourceQuote },
+    weeklyFrequency: { value: value.sessionsPerPeriod, quote: value.sessionsPerPeriod === null ? null : value.sourceQuote },
+    minutesPerSession: { value: value.minutesPerSession, quote: value.minutesPerSession === null ? null : value.sourceQuote },
+    needsReview: value.needsReview,
+  };
+}
+
+export function validateExtraction(raw: unknown, text: string): Extraction {
+  const parsed = ExtractionSchema.safeParse(raw);
+  if (!parsed.success || !text.includes(parsed.data.sourceQuote)) throw new EvidenceError();
+  const candidate = validateCandidate(candidateFromExtraction(parsed.data), text);
+  return { ...parsed.data, needsReview: candidate.needsReview };
+}
+
+export function extractionToCandidate(raw: unknown, text: string): Candidate {
+  return candidateFromExtraction(validateExtraction(raw, text));
 }
 
 export function canCompareWithEthan(candidate: Candidate, text: string) {
